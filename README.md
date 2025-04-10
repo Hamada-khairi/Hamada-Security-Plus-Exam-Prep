@@ -33,7 +33,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-3. Import questions from your PDF:
+3. OPTINAL Import questions from your PDF: (u can do this in the UI)
 ```bash
 python pdf_import.py path/to/your/questions.pdf [options]
 ```

@@ -2,6 +2,14 @@
 
 A modern, feature-rich web application for practicing Security+ exam questions with a beautiful dark theme UI.
 
+![image](https://github.com/user-attachments/assets/57a2167d-8b2f-4df7-971f-f338f18a1d13)
+![image](https://github.com/user-attachments/assets/4d0d203b-dcb1-46ba-9740-81d5f9519695)
+![image](https://github.com/user-attachments/assets/e357d296-2c29-486a-adaf-33650ff6668c)
+![image](https://github.com/user-attachments/assets/14b299cd-ed65-4c71-9f13-07c8cc1c1a20)
+
+
+
+
 ## Features
 
 - User authentication and progress tracking

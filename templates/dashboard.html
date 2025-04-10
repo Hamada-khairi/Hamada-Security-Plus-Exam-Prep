@@ -1,0 +1,435 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold flex items-center">
+            <i class="fas fa-shield-alt text-primary mr-2"></i>
+            Hamada is Saying Welcome, {{ current_user.username }}!
+        </h1>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Total Exams</h3>
+                <i class="fas fa-file-alt text-2xl text-primary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ exams_taken }}</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Average Score</h3>
+                <i class="fas fa-chart-line text-2xl text-secondary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ average_score }}%</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Questions Answered</h3>
+                <i class="fas fa-check-circle text-2xl text-green-500"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ total_questions }}</p>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Question Bank</h3>
+                <i class="fas fa-database text-2xl text-indigo-500"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ questions|length }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <!-- Quick Start Exam Section -->
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-6 flex items-center">
+                <i class="fas fa-rocket text-primary mr-2"></i>
+                Quick Start Exam
+            </h2>
+            <form action="{{ url_for('start_exam') }}" method="POST" class="space-y-4">
+                <div>
+                    <label for="num_questions" class="block text-sm font-medium mb-1">Number of Questions</label>
+                    <input type="number" id="num_questions" name="num_questions" value="90" min="1" max="100"
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="time_per_question" class="block text-sm font-medium mb-1">Minutes per Question</label>
+                    <input type="number" id="time_per_question" name="time_per_question" value="1" min="1" max="10"
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="is_timed" name="is_timed" class="mr-2" checked>
+                    <label for="is_timed" class="text-sm font-medium">Enable Timer</label>
+                </div>
+                <button type="submit"
+                    class="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                    <i class="fas fa-play mr-2"></i>Start Exam
+                </button>
+            </form>
+        </div>
+
+        <!-- Question Management Section -->
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-6 flex items-center">
+                <i class="fas fa-cog text-primary mr-2"></i>
+                Question Management
+            </h2>
+            <form action="{{ url_for('upload_questions') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <div>
+                    <label for="pdf_file" class="block text-sm font-medium mb-1">Upload Question Bank (PDF)</label>
+                    <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                </div>
+                <button type="submit"
+                    class="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                    <i class="fas fa-upload mr-2"></i>Upload and Process PDF
+                </button>
+            </form>
+            
+            <div class="mt-4 flex space-x-2">
+                <a href="{{ url_for('add_question') }}" class="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-center">
+                    <i class="fas fa-plus mr-2"></i>Add Question
+                </a>
+                
+                <button type="button" onclick="confirmDeleteAll()" class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                    <i class="fas fa-trash-alt mr-2"></i>Remove All Questions
+                </button>
+            </div>
+            
+            <!-- Delete All Questions Confirmation Modal -->
+            <div id="deleteAllModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-gray-800 p-6 rounded-lg shadow-xl max-w-md w-full">
+                    <h3 class="text-xl font-bold mb-4">Confirm Delete All Questions</h3>
+                    <p class="mb-6">Are you sure you want to delete all questions from your question bank? This action cannot be undone.</p>
+                    <div class="flex justify-end space-x-4">
+                        <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-700">
+                            Cancel
+                        </button>
+                        <form action="{{ url_for('delete_all_questions') }}" method="POST">
+                            <button type="submit" class="px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700">
+                                Delete All Questions
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Review Section -->
+    {% if questions %}
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold flex items-center">
+                <i class="fas fa-list text-primary mr-2"></i>
+                Question Bank
+            </h2>
+            <div class="flex items-center">
+                <div class="mr-4">
+                    <select id="questionFilter" class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-1.5 focus:ring-primary focus:border-primary">
+                        <option value="all">All Questions</option>
+                        <option value="marked">Marked for Review</option>
+                        <option value="recent">Recently Added</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="text" id="questionSearch" placeholder="Search questions..." 
+                           class="bg-gray-700 border border-gray-600 rounded-lg px-3 py-1.5 focus:ring-primary focus:border-primary">
+                </div>
+            </div>
+        </div>
+        
+        <div class="space-y-6 max-h-96 overflow-y-auto pr-2" id="questionsContainer">
+            {% for question in questions %}
+            <div class="bg-gray-700 rounded-lg p-4 question-item">
+                <div class="flex justify-between">
+                    <p class="font-medium mb-2">{{ question.question_text }}</p>
+                    <span class="text-gray-400 text-sm">ID: {{ question.id }}</span>
+                </div>
+                <div class="ml-4 space-y-1">
+                    {% for option in question.options %}
+                    <p class="{% if loop.index0 in question.correct_answers %}text-green-400{% endif %}">
+                        {{ ['A', 'B', 'C', 'D', 'E', 'F'][loop.index0] }}. {{ option }}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% if question.explanation %}
+                <div class="mt-2 bg-gray-800 p-2 rounded">
+                    <p class="text-gray-300"><strong>Explanation:</strong> {{ question.explanation }}</p>
+                </div>
+                {% endif %}
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <form action="{{ url_for('delete_question', question_id=question.id) }}" method="POST" class="inline">
+                        <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm">
+                            <i class="fas fa-trash mr-1"></i>Delete
+                        </button>
+                    </form>
+                    <a href="{{ url_for('edit_question', question_id=question.id) }}" 
+                       class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm">
+                       <i class="fas fa-edit mr-1"></i>Edit
+                    </a>
+                    <button type="button" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 text-sm toggle-mark" 
+                            data-question-id="{{ question.id }}">
+                        <i class="fas fa-bookmark mr-1"></i><span>Mark</span>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8 text-center">
+        <i class="fas fa-database text-5xl text-gray-600 mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">No Questions in Your Bank</h3>
+        <p class="text-gray-400 mb-4">Upload a PDF question bank or add questions manually to get started</p>
+        <div class="flex justify-center space-x-4">
+            <a href="{{ url_for('add_question') }}" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                <i class="fas fa-plus mr-2"></i>Add Question
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Advanced Exam Configuration -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+            <i class="fas fa-sliders-h text-primary mr-2"></i>
+            Advanced Exam Settings
+        </h2>
+        <form action="{{ url_for('start_exam') }}" method="POST" class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-gray-400 mb-2">Number of Questions</label>
+                    <select name="num_questions" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option value="20">20 Questions</option>
+                        <option value="50">50 Questions</option>
+                        <option value="90" selected>90 Questions</option>
+                        <option value="180">180 Questions</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-2">Exam Mode</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="exam_mode" value="timed" checked
+                                   class="text-primary focus:ring-primary">
+                            <span>Timed Exam</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="exam_mode" value="practice"
+                                   class="text-primary focus:ring-primary">
+                            <span>Practice Mode (No Timer)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="exam_mode" value="review"
+                                   class="text-primary focus:ring-primary">
+                            <span>Review Mode (With Explanations)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="timed-options">
+                    <label class="block text-gray-400 mb-2">Timer Type</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="timer_type" value="per_question" checked
+                                   class="text-primary focus:ring-primary">
+                            <span>Per Question (1 minute each)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="timer_type" value="total"
+                                   class="text-primary focus:ring-primary">
+                            <span>Total Time (90 min for 90 questions)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-400 mb-2">Question Selection</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="question_selection" value="random" checked
+                                   class="text-primary focus:ring-primary">
+                            <span>Random Questions</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="question_selection" value="marked"
+                                   class="text-primary focus:ring-primary">
+                            <span>Marked Questions Only</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="question_selection" value="missed"
+                                   class="text-primary focus:ring-primary">
+                            <span>Previously Missed Questions</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                <i class="fas fa-play mr-2"></i>Start Exam
+            </button>
+        </form>
+    </div>
+
+    <!-- Recent Exam History -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold flex items-center">
+                <i class="fas fa-history text-primary mr-2"></i>
+                Recent Exam History
+            </h2>
+            <a href="{{ url_for('exam_analytics') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                <i class="fas fa-chart-bar mr-2"></i>View Analytics
+            </a>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left border-b border-gray-700">
+                        <th class="pb-3">Date</th>
+                        <th class="pb-3">Questions</th>
+                        <th class="pb-3">Score</th>
+                        <th class="pb-3">Time Taken</th>
+                        <th class="pb-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in exam_history %}
+                    <tr class="border-b border-gray-700 hover:bg-gray-750">
+                        <td class="py-3">{{ exam.date_taken.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td class="py-3">{{ exam.total_questions }}</td>
+                        <td class="py-3">
+                            <span class="px-2 py-1 rounded-full text-xs 
+                                {% if exam.score >= 80 %}bg-green-800 text-green-200
+                                {% elif exam.score >= 70 %}bg-yellow-800 text-yellow-200
+                                {% else %}bg-red-800 text-red-200{% endif %}">
+                                {{ exam.score }}%
+                            </span>
+                        </td>
+                        <td class="py-3">{{ exam.time_taken }} minutes</td>
+                        <td class="py-3">
+                            <div class="flex space-x-2">
+                                <a href="{{ url_for('view_exam_results', exam_id=exam.id) }}" 
+                                   class="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ url_for('download_exam_results', exam_id=exam.id) }}" 
+                                   class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if not exam_history %}
+        <div class="text-center py-8">
+            <p class="text-gray-400">No exam history available yet. Start an exam to track your progress!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Toggle timed options visibility based on exam mode
+document.addEventListener('DOMContentLoaded', function() {
+    const examModeRadios = document.querySelectorAll('input[name="exam_mode"]');
+    const timedOptions = document.querySelector('.timed-options');
+    
+    examModeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            timedOptions.style.display = this.value === 'timed' ? 'block' : 'none';
+        });
+    });
+    
+    // Question filtering and search
+    const searchInput = document.getElementById('questionSearch');
+    const filterSelect = document.getElementById('questionFilter');
+    const questionItems = document.querySelectorAll('.question-item');
+    
+    if (searchInput && filterSelect) {
+        const applyFilters = () => {
+            const searchText = searchInput.value.toLowerCase();
+            const filterValue = filterSelect.value;
+            
+            questionItems.forEach(item => {
+                const questionText = item.querySelector('p').textContent.toLowerCase();
+                const isMarked = item.classList.contains('marked');
+                
+                let showItem = true;
+                
+                // Apply search filter
+                if (searchText && !questionText.includes(searchText)) {
+                    showItem = false;
+                }
+                
+                // Apply category filter
+                if (filterValue === 'marked' && !isMarked) {
+                    showItem = false;
+                } else if (filterValue === 'recent') {
+                    // This would require additional data from the server
+                    // For now, we'll just show all items when "recent" is selected
+                }
+                
+                item.style.display = showItem ? 'block' : 'none';
+            });
+        };
+        
+        searchInput.addEventListener('input', applyFilters);
+        filterSelect.addEventListener('change', applyFilters);
+    }
+    
+    // Toggle mark functionality
+    const toggleMarkButtons = document.querySelectorAll('.toggle-mark');
+    toggleMarkButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const questionId = this.getAttribute('data-question-id');
+            const questionItem = this.closest('.question-item');
+            
+            // Toggle marked class
+            questionItem.classList.toggle('marked');
+            
+            // Update button text
+            const span = this.querySelector('span');
+            if (questionItem.classList.contains('marked')) {
+                span.textContent = 'Unmark';
+                this.classList.replace('bg-yellow-600', 'bg-yellow-800');
+                this.classList.replace('hover:bg-yellow-700', 'hover:bg-yellow-900');
+            } else {
+                span.textContent = 'Mark';
+                this.classList.replace('bg-yellow-800', 'bg-yellow-600');
+                this.classList.replace('hover:bg-yellow-900', 'hover:bg-yellow-700');
+            }
+            
+            // Here you would typically make an AJAX request to update the marked status on the server
+            fetch(`/toggle_mark_question/${questionId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+        });
+    });
+});
+
+// Delete all questions confirmation modal
+function confirmDeleteAll() {
+    document.getElementById('deleteAllModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteAllModal').classList.add('hidden');
+}
+</script>
+{% endblock %}

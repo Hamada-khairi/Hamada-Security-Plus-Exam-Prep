@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold flex items-center">
+            <i class="fas fa-chart-line text-primary mr-2"></i>
+            Exam Analytics
+        </h1>
+    </div>
+
+    <!-- Overall Statistics -->
+    <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Total Exams</h3>
+                <i class="fas fa-file-alt text-2xl text-primary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ total_exams }}</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Average Score</h3>
+                <i class="fas fa-percentage text-2xl text-secondary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ avg_score }}%</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Best Score</h3>
+                <i class="fas fa-trophy text-2xl text-yellow-500"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ best_score }}%</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Avg. Time</h3>
+                <i class="fas fa-clock text-2xl text-indigo-500"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ avg_time }} min</p>
+        </div>
+    </div>
+
+    <!-- Recent Exams -->
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-xl font-bold mb-6 flex items-center">
+            <i class="fas fa-history text-primary mr-2"></i>
+            Recent Exams
+        </h2>
+
+        {% if recent_exams %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="text-left border-b border-gray-700">
+                        <th class="pb-4">Date</th>
+                        <th class="pb-4">Score</th>
+                        <th class="pb-4">Questions</th>
+                        <th class="pb-4">Time Taken</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    {% for exam in recent_exams %}
+                    <tr class="hover:bg-gray-700">
+                        <td class="py-4">{{ exam.date_taken.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td class="py-4">{{ "%.1f"|format(exam.score) }}%</td>
+                        <td class="py-4">{{ exam.total_questions }}</td>
+                        <td class="py-4">{{ exam.time_taken }} min</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <p class="text-gray-400">No exam history available yet. Start an exam to track your progress!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="flex justify-end">
+        <a href="{{ url_for('dashboard') }}" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

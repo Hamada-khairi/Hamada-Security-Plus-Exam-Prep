@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-plus-circle text-primary mr-2"></i>
+                Add New Question
+            </h1>
+
+            <form action="{{ url_for('add_question') }}" method="POST" class="space-y-6">
+                <!-- Question Text -->
+                <div>
+                    <label for="question_text" class="block text-sm font-medium mb-2">Question Text</label>
+                    <textarea id="question_text" name="question_text" rows="4" required
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary"></textarea>
+                </div>
+
+                <!-- Options -->
+                <div id="options-container">
+                    <label class="block text-sm font-medium mb-2">Options</label>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <input type="text" name="options[]" required
+                                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                            <div class="flex items-center">
+                                <input type="checkbox" name="correct_answers[]" value="0" class="mr-2">
+                                <label class="text-sm">Correct</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addOption()"
+                        class="mt-2 text-sm text-primary hover:text-blue-400 transition-colors">
+                        <i class="fas fa-plus mr-1"></i>Add Option
+                    </button>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-medium mb-2">Category</label>
+                    <input type="text" id="category" name="category"
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                </div>
+
+                <!-- Explanation -->
+                <div>
+                    <label for="explanation" class="block text-sm font-medium mb-2">Explanation</label>
+                    <textarea id="explanation" name="explanation" rows="4" required
+                        class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex space-x-4">
+                    <button type="submit"
+                        class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-save mr-2"></i>Save Question
+                    </button>
+                    <a href="{{ url_for('dashboard') }}"
+                        class="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-center">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let optionCount = 1;
+
+    function addOption() {
+        const optionsContainer = document.querySelector('#options-container .space-y-2');
+        const newOption = document.createElement('div');
+        newOption.className = 'flex items-center space-x-2';
+        newOption.innerHTML = `
+            <input type="text" name="options[]" required
+                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+            <div class="flex items-center">
+                <input type="checkbox" name="correct_answers[]" value="${optionCount}" class="mr-2">
+                <label class="text-sm">Correct</label>
+            </div>
+            <button type="button" onclick="removeOption(this)" class="text-red-500 hover:text-red-400 transition-colors">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        optionsContainer.appendChild(newOption);
+        optionCount++;
+    }
+
+    function removeOption(button) {
+        button.closest('.flex').remove();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security+ Exam Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script>
+        const themes = {
+            'default': {
+                primary: '#3B82F6',
+                secondary: '#10B981',
+                dark: '#1F2937',
+                accent: '#8B5CF6'
+            },
+            'onedark': {
+                primary: '#61AFEF',
+                secondary: '#98C379',
+                dark: '#282C34',
+                accent: '#C678DD'
+            },
+            'blackgold': {
+                primary: '#FFD700',
+                secondary: '#FFA500',
+                dark: '#000000',
+                accent: '#B8860B'
+            },
+            'oceanic': {
+                primary: '#66D9EF',
+                secondary: '#A6E22E',
+                dark: '#1B2B34',
+                accent: '#F92672'
+            },
+            'purple': {
+                primary: '#9D4EDD',
+                secondary: '#7B2CBF',
+                dark: '#240046',
+                accent: '#C77DFF'
+            }
+        };
+
+        const currentTheme = '{{ current_user.settings.theme if current_user.is_authenticated and current_user.settings else "default" }}';
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: themes[currentTheme]
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s;
+        }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(31, 41, 55, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.7);
+        }
+        
+        /* Smooth transitions */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        /* Theme transition */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Glass effect */
+        .glass {
+            background: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Smooth animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="dark bg-dark text-gray-100 min-h-screen flex flex-col" x-data="{ themeOpen: false }">
+    <nav class="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md shadow-lg z-50 border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center group">
+                        <div class="relative">
+                            <i class="fas fa-shield-alt text-primary text-3xl mr-3 transform transition-transform group-hover:scale-110"></i>
+                            <div class="absolute -inset-1 bg-primary opacity-20 rounded-full blur group-hover:opacity-30 transition-opacity"></div>
+                        </div>
+                        <span class="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Hamada Security+ Prep</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    {% if current_user.is_authenticated %}
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" 
+                                    class="flex items-center px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-all"
+                                    :class="{ 'bg-gray-700': open }">
+                                <i class="fas fa-palette mr-2 text-primary"></i>
+                                <span>Theme</span>
+                                <i class="fas fa-chevron-down ml-2 text-xs transition-transform" :class="{ 'transform rotate-180': open }"></i>
+                            </button>
+                            <div x-show="open" 
+                                 @click.away="open = false"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 scale-95"
+                                 x-transition:enter-end="opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 scale-100"
+                                 x-transition:leave-end="opacity-0 scale-95"
+                                 class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2 z-50 glass">
+                                <a href="{{ url_for('change_theme', theme='default') }}" 
+                                   class="flex items-center px-4 py-3 hover:bg-gray-700/50 transition-colors {% if not current_user.settings or current_user.settings.theme == 'default' %}text-primary{% endif %}">
+                                    <div class="w-4 h-4 rounded-full bg-blue-500 mr-3 shadow-lg shadow-blue-500/50"></div>
+                                    <span>Default</span>
+                                </a>
+                                <a href="{{ url_for('change_theme', theme='onedark') }}" 
+                                   class="flex items-center px-4 py-3 hover:bg-gray-700/50 transition-colors {% if current_user.settings and current_user.settings.theme == 'onedark' %}text-primary{% endif %}">
+                                    <div class="w-4 h-4 rounded-full bg-blue-400 mr-3 shadow-lg shadow-blue-400/50"></div>
+                                    <span>One Dark Pro</span>
+                                </a>
+                                <a href="{{ url_for('change_theme', theme='blackgold') }}" 
+                                   class="flex items-center px-4 py-3 hover:bg-gray-700/50 transition-colors {% if current_user.settings and current_user.settings.theme == 'blackgold' %}text-primary{% endif %}">
+                                    <div class="w-4 h-4 rounded-full bg-yellow-500 mr-3 shadow-lg shadow-yellow-500/50"></div>
+                                    <span>Black & Gold</span>
+                                </a>
+                                <a href="{{ url_for('change_theme', theme='oceanic') }}" 
+                                   class="flex items-center px-4 py-3 hover:bg-gray-700/50 transition-colors {% if current_user.settings and current_user.settings.theme == 'oceanic' %}text-primary{% endif %}">
+                                    <div class="w-4 h-4 rounded-full bg-cyan-400 mr-3 shadow-lg shadow-cyan-400/50"></div>
+                                    <span>Oceanic</span>
+                                </a>
+                                <a href="{{ url_for('change_theme', theme='purple') }}" 
+                                   class="flex items-center px-4 py-3 hover:bg-gray-700/50 transition-colors {% if current_user.settings and current_user.settings.theme == 'purple' %}text-primary{% endif %}">
+                                    <div class="w-4 h-4 rounded-full bg-purple-500 mr-3 shadow-lg shadow-purple-500/50"></div>
+                                    <span>Purple</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('dashboard') }}" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-all group">
+                            <i class="fas fa-tachometer-alt mr-2 text-primary group-hover:scale-110 transition-transform"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-all group">
+                            <i class="fas fa-sign-out-alt mr-2 text-red-500 group-hover:scale-110 transition-transform"></i>
+                            <span>Logout</span>
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-800 transition-all group">
+                            <i class="fas fa-sign-in-alt mr-2 text-primary group-hover:scale-110 transition-transform"></i>
+                            <span>Login</span>
+                        </a>
+                        <a href="{{ url_for('register') }}" class="flex items-center px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 transition-all group">
+                            <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform"></i>
+                            <span>Register</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 pt-24 pb-8 flex-grow">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-red-500/90 backdrop-blur-sm text-white p-4 rounded-lg mb-4 shadow-lg animate-fade-in border border-red-400/30">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle mr-3 text-xl"></i>
+                            <p>{{ message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-xl p-6 mb-8 border border-gray-700/30 hover:border-primary/30 transition-colors duration-300">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="bg-gray-900/90 backdrop-blur-md text-gray-400 py-6 mt-auto border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-primary text-xl"></i>
+                    <p class="font-semibold">&copy; 2025 Security+ Exam Prep</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="hover:text-primary transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

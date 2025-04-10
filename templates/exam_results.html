@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center">
+                <i class="fas fa-clipboard-list text-primary mr-2"></i>
+                Exam Results
+            </h1>
+            <div class="flex space-x-4">
+                <a href="{{ url_for('download_exam_results', exam_id=exam.id) }}" 
+                   class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    <i class="fas fa-download mr-2"></i>Download Results
+                </a>
+                <a href="{{ url_for('dashboard') }}" 
+                   class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Summary -->
+    <div class="grid md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Score</h3>
+                <i class="fas fa-percentage text-2xl text-primary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ "%.1f"|format(exam.score) }}%</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Questions</h3>
+                <i class="fas fa-question-circle text-2xl text-secondary"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ exam.total_questions }}</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Time Taken</h3>
+                <i class="fas fa-clock text-2xl text-yellow-500"></i>
+            </div>
+            <p class="text-3xl font-bold">{{ exam.time_taken }} min</p>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold">Date</h3>
+                <i class="fas fa-calendar text-2xl text-indigo-500"></i>
+            </div>
+            <p class="text-xl font-bold">{{ exam.date_taken.strftime('%Y-%m-%d') }}</p>
+            <p class="text-lg">{{ exam.date_taken.strftime('%H:%M') }}</p>
+        </div>
+    </div>
+
+    <!-- Question Review -->
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-6 flex items-center">
+            <i class="fas fa-list-alt text-primary mr-2"></i>
+            Question Review
+        </h2>
+
+        <div class="space-y-6">
+            {% for question in exam.questions %}
+            <div class="bg-gray-700 rounded-lg p-4">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <p class="font-medium mb-4">{{ question.text }}</p>
+                        
+                        <!-- Options -->
+                        <div class="space-y-2 mb-4">
+                            {% for option in question.options %}
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 rounded-full 
+                                    {% if loop.index0 in question.correct_answer %}bg-green-500
+                                    {% elif loop.index0 in question.user_answer %}bg-red-500
+                                    {% else %}bg-gray-500{% endif %}">
+                                </div>
+                                <span>{{ option }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Explanation -->
+                        <div class="bg-gray-800 p-3 rounded">
+                            <p class="text-sm text-gray-300">
+                                <strong>Explanation:</strong> {{ question.explanation }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Result Badge -->
+                    <div class="ml-4">
+                        {% if question.is_correct %}
+                        <span class="bg-green-800 text-green-200 px-2 py-1 rounded text-sm">Correct</span>
+                        {% else %}
+                        <span class="bg-red-800 text-red-200 px-2 py-1 rounded text-sm">Incorrect</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

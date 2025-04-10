@@ -1,0 +1,446 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hidden data elements -->
+<script id="question-data" type="application/json">
+    {{ questions|tojson|safe }}
+</script>
+{% if total_time %}
+<script id="time-data" type="application/json">
+    {{ total_time|tojson|safe }}
+</script>
+{% endif %}
+
+<div class="max-w-4xl mx-auto">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h1 class="text-2xl font-bold">Security+ Practice Exam</h1>
+            <div class="flex items-center space-x-4">
+                <div class="text-xl" id="timer-container">
+                    <i class="fas fa-clock text-primary mr-2"></i>
+                    <span id="timer"></span>
+                </div>
+                <div class="text-xl">
+                    <i class="fas fa-question-circle text-secondary mr-2"></i>
+                    Question <span id="current-question-num"></span> of <span id="total-questions"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <p class="text-lg mb-4" id="question-text"></p>
+                
+                <div class="space-y-3" id="options-container"></div>
+            </div>
+
+            <div id="explanation-container" class="bg-gray-700 p-4 rounded-lg" style="display: none;">
+                <h3 class="text-xl font-semibold mb-2">Explanation</h3>
+                <p id="explanation-text" class="text-gray-300"></p>
+            </div>
+
+            <div class="flex justify-between">
+                <button id="prev-button"
+                        class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Previous
+                </button>
+
+                <button id="submit-button"
+                        class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Submit Answer
+                </button>
+
+                <button id="next-button"
+                        style="display: none;"
+                        class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Next Question
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Question Navigation</h2>
+            <div>
+                <span class="text-green-500"><i class="fas fa-check-circle"></i> Correct: <span id="correct-count">0</span></span>
+                <span class="text-red-500"><i class="fas fa-times-circle"></i> Incorrect: <span id="incorrect-count">0</span></span>
+                <span class="text-red-500 ml-4"><i class="fas fa-times-circle"></i> Incorrect: <span x-text="incorrectAnswers"></span></span>
+            </div>
+        </div>
+        <div id="navigation-grid" class="grid grid-cols-10 gap-2 mt-4"></div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const app = {
+    // State properties
+    questions: [],
+    currentQuestionIndex: 0,
+    selectedAnswers: [],
+    questionStatus: {},
+    timeRemaining: null,
+    timer: null,
+    correctAnswers: 0,
+    
+    // DOM Elements
+    elements: {
+      timer: document.getElementById('timer'),
+      currentQuestionNum: document.getElementById('current-question-num'),
+      totalQuestions: document.getElementById('total-questions'),
+      questionText: document.getElementById('question-text'),
+      optionsContainer: document.getElementById('options-container'),
+      explanationContainer: document.getElementById('explanation-container'),
+      explanationText: document.getElementById('explanation-text'),
+      prevButton: document.getElementById('prev-button'),
+      submitButton: document.getElementById('submit-button'),
+      nextButton: document.getElementById('next-button'),
+      navigationGrid: document.getElementById('navigation-grid'),
+      correctCount: document.getElementById('correct-count'),
+      incorrectCount: document.getElementById('incorrect-count')
+    },
+    
+    // Initialize the application
+    init(questions, totalTime) {
+      this.questions = questions;
+      this.timeRemaining = totalTime ? totalTime * 60 : null;
+      this.selectedAnswers = [];
+      this.questionStatus = {};
+      this.correctAnswers = 0;
+      
+      if (this.timeRemaining) {
+        this.startTimer();
+      }
+      
+      this.renderQuestion();
+      this.renderNavigationGrid();
+      this.updateStats();
+      this.setupEventListeners();
+    },
+    
+    // Get the current question
+    getCurrentQuestion() {
+      return this.questions[this.currentQuestionIndex];
+    },
+    
+    // Check if this is the last question
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.questions.length - 1;
+    },
+    
+    // Get exam progress as percentage
+    getProgress() {
+      return Math.round((this.currentQuestionIndex + 1) / this.questions.length * 100);
+    },
+    
+    // Check if current question has been answered
+    isAnswered() {
+      return this.questionStatus[this.currentQuestionIndex] !== undefined;
+    },
+    
+    // Get count of correct answers
+    getCorrectAnswersCount() {
+      return Object.values(this.questionStatus).filter(status => status === 'correct').length;
+    },
+    
+    // Get count of incorrect answers
+    getIncorrectAnswersCount() {
+      return Object.values(this.questionStatus).filter(status => status === 'incorrect').length;
+    },
+    
+    // Start the exam timer
+    startTimer() {
+      if (!this.timer) {
+        this.timer = setInterval(() => {
+          if (this.timeRemaining > 0) {
+            this.timeRemaining--;
+            this.updateTimerDisplay();
+          } else {
+            this.finishExam();
+          }
+        }, 1000);
+      }
+    },
+    
+    // Format time for display
+    formatTime(seconds) {
+      if (!seconds && seconds !== 0) return '--:--';
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    },
+    
+    // Toggle an answer selection
+    toggleAnswer(index) {
+      if (this.isAnswered()) return;
+      
+      const position = this.selectedAnswers.indexOf(index);
+      if (position === -1) {
+        this.selectedAnswers.push(index);
+      } else {
+        this.selectedAnswers.splice(position, 1);
+      }
+      
+      this.updateOptionStyles();
+    },
+    
+    // Check if an answer is selected
+    isSelectedAnswer(index) {
+      return this.selectedAnswers.includes(index);
+    },
+    
+    // Check if an answer is correct
+    isCorrectAnswer(index) {
+      return this.getCurrentQuestion().correct_answers.includes(index);
+    },
+    
+    // Submit the current answer
+    async submitAnswer() {
+      try {
+        const response = await fetch('/submit-answer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            question_id: this.getCurrentQuestion().id,
+            answer: this.selectedAnswers
+          })
+        });
+
+        const result = await response.json();
+        this.questionStatus[this.currentQuestionIndex] = result.correct ? 'correct' : 'incorrect';
+        
+        this.updateStats();
+        this.updateOptionStyles();
+        this.showExplanation();
+        this.updateButtonVisibility();
+        this.updateNavigationGrid();
+      } catch (error) {
+        console.error('Error submitting answer:', error);
+      }
+    },
+    
+    // Go to previous question
+    previousQuestion() {
+      if (this.currentQuestionIndex > 0) {
+        this.currentQuestionIndex--;
+        this.selectedAnswers = [];
+        this.renderQuestion();
+        this.updateButtonVisibility();
+        this.updateNavigationGrid();
+      }
+    },
+    
+    // Go to next question
+    nextQuestion() {
+      if (this.currentQuestionIndex < this.questions.length - 1) {
+        this.currentQuestionIndex++;
+        this.selectedAnswers = [];
+        this.renderQuestion();
+        this.updateButtonVisibility();
+        this.updateNavigationGrid();
+      } else {
+        this.finishExam();
+      }
+    },
+    
+    // Navigate to a specific question
+    goToQuestion(index) {
+      this.currentQuestionIndex = index;
+      this.selectedAnswers = [];
+      this.renderQuestion();
+      this.updateButtonVisibility();
+      this.updateNavigationGrid();
+    },
+    
+    // Finish the exam
+    finishExam() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+      const score = Math.round((this.getCorrectAnswersCount() / this.questions.length) * 100);
+      window.location.href = `/exam-results?score=${score}&total=${this.questions.length}`;
+    },
+    
+    // Render the current question
+    renderQuestion() {
+      const question = this.getCurrentQuestion();
+      
+      // Update question counter
+      this.elements.currentQuestionNum.textContent = this.currentQuestionIndex + 1;
+      this.elements.totalQuestions.textContent = this.questions.length;
+      
+      // Update question text
+      this.elements.questionText.textContent = question.question_text;
+      
+      // Clear and create options
+      this.elements.optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const label = document.createElement('label');
+        label.className = 'flex items-center space-x-3 p-3 rounded-lg transition-colors bg-gray-600 hover:bg-gray-500';
+        
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.className = 'form-checkbox h-5 w-5 text-primary';
+        input.checked = this.isSelectedAnswer(index);
+        input.disabled = this.isAnswered();
+        input.addEventListener('change', () => this.toggleAnswer(index));
+        
+        const span = document.createElement('span');
+        span.textContent = option;
+        
+        label.appendChild(input);
+        label.appendChild(span);
+        this.elements.optionsContainer.appendChild(label);
+      });
+      
+      // Update option styles based on current state
+      this.updateOptionStyles();
+      
+      // Show or hide explanation
+      if (this.isAnswered()) {
+        this.showExplanation();
+      } else {
+        this.hideExplanation();
+      }
+    },
+    
+    // Update option styles based on selection and correctness
+    updateOptionStyles() {
+      const optionLabels = this.elements.optionsContainer.querySelectorAll('label');
+      
+      optionLabels.forEach((label, index) => {
+        // Reset classes
+        label.className = 'flex items-center space-x-3 p-3 rounded-lg transition-colors';
+        
+        if (this.isAnswered()) {
+          if (this.isCorrectAnswer(index)) {
+            label.classList.add('bg-green-600');
+          } else if (this.isSelectedAnswer(index)) {
+            label.classList.add('bg-red-600');
+          } else {
+            label.classList.add('bg-gray-600');
+          }
+        } else {
+          label.classList.add('bg-gray-600', 'hover:bg-gray-500');
+        }
+      });
+    },
+    
+    // Show the explanation for the current question
+    showExplanation() {
+      this.elements.explanationContainer.style.display = 'block';
+      this.elements.explanationText.textContent = this.getCurrentQuestion().explanation;
+    },
+    
+    // Hide the explanation container
+    hideExplanation() {
+      this.elements.explanationContainer.style.display = 'none';
+    },
+    
+    // Update button visibility based on state
+    updateButtonVisibility() {
+      // Previous button
+      this.elements.prevButton.disabled = this.currentQuestionIndex === 0;
+      
+      // Submit button visibility
+      if (this.isAnswered()) {
+        this.elements.submitButton.style.display = 'none';
+        this.elements.nextButton.style.display = 'block';
+      } else {
+        this.elements.submitButton.style.display = 'block';
+        this.elements.nextButton.style.display = 'none';
+      }
+      
+      // Next button text
+      if (this.isLastQuestion()) {
+        this.elements.nextButton.textContent = 'Finish Exam';
+        this.elements.nextButton.classList.add('bg-green-500', 'hover:bg-green-600');
+      } else {
+        this.elements.nextButton.textContent = 'Next Question';
+        this.elements.nextButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+      }
+    },
+    
+    // Update the navigation grid
+    renderNavigationGrid() {
+      this.elements.navigationGrid.innerHTML = '';
+      
+      this.questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'w-10 h-10 rounded-lg font-bold transition-colors';
+        button.textContent = index + 1;
+        
+        // Update button colors based on status
+        this.updateNavigationButton(button, index);
+        
+        button.addEventListener('click', () => this.goToQuestion(index));
+        this.elements.navigationGrid.appendChild(button);
+      });
+    },
+    
+    // Update a single navigation button
+    updateNavigationButton(button, index) {
+      // Reset classes
+      button.className = 'w-10 h-10 rounded-lg font-bold transition-colors';
+      
+      if (!this.questionStatus[index]) {
+        button.classList.add('bg-gray-600');
+      } else if (this.questionStatus[index] === 'correct') {
+        button.classList.add('bg-green-500');
+      } else if (this.questionStatus[index] === 'incorrect') {
+        button.classList.add('bg-red-500');
+      }
+      
+      // Highlight current question
+      if (this.currentQuestionIndex === index) {
+        button.classList.add('ring-2', 'ring-white');
+      }
+    },
+    
+    // Update the navigation grid without recreating it
+    updateNavigationGrid() {
+      const buttons = this.elements.navigationGrid.querySelectorAll('button');
+      
+      buttons.forEach((button, index) => {
+        this.updateNavigationButton(button, index);
+      });
+    },
+    
+    // Update timer display
+    updateTimerDisplay() {
+      if (this.elements.timer) {
+        this.elements.timer.textContent = this.formatTime(this.timeRemaining);
+      }
+    },
+    
+    // Update statistics display
+    updateStats() {
+      this.elements.correctCount.textContent = this.getCorrectAnswersCount();
+      this.elements.incorrectCount.textContent = this.getIncorrectAnswersCount();
+    },
+    
+    // Set up all event listeners
+    setupEventListeners() {
+      this.elements.prevButton.addEventListener('click', () => this.previousQuestion());
+      this.elements.submitButton.addEventListener('click', () => this.submitAnswer());
+      this.elements.nextButton.addEventListener('click', () => this.nextQuestion());
+    }
+  };
+  
+  // Initialize the app with questions and time limit from the server
+  // This assumes the questions and totalTime are available in the global scope
+  app.init(
+    JSON.parse(document.getElementById('question-data').textContent),
+    document.getElementById('time-data') ? parseInt(document.getElementById('time-data').textContent) : null
+  );
+});
+
+</script>
+{% endblock %}

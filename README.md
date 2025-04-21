@@ -2,6 +2,13 @@
 
 A modern, feature-rich web application for practicing Security+ exam questions with a beautiful dark theme UI. Designed specifically for CompTIA Security+ exam preparation.
 
+![image](https://github.com/user-attachments/assets/9fa6a0c7-1c70-4953-bcc1-6b1444912781)
+
+![image](https://github.com/user-attachments/assets/4bbee45a-f68a-4771-9ac2-fd64f0673612)
+
+---
+
+
 ## Features
 
 - User authentication and progress tracking

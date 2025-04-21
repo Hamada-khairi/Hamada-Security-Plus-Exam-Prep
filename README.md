@@ -35,6 +35,7 @@ A modern, feature-rich web application for practicing Security+ exam questions w
 ```bash
 python -m venv venv
 .\venv\Scripts\activate  # Windows
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass # Windows
 source venv/bin/activate  # Linux/Mac
 ```
 

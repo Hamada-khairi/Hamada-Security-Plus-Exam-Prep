@@ -6,6 +6,13 @@ A modern, feature-rich web application for practicing Security+ exam questions w
 
 ![image](https://github.com/user-attachments/assets/4bbee45a-f68a-4771-9ac2-fd64f0673612)
 
+![image](https://github.com/user-attachments/assets/6f758554-b2ff-486a-8654-e1ca7b31242d)
+
+![image](https://github.com/user-attachments/assets/29e74bc0-3836-415a-864d-a1bafdc5dcdc)
+
+![image](https://github.com/user-attachments/assets/d01d5679-d988-4e34-a65f-96849ba18be4)
+
+
 ---
 
 

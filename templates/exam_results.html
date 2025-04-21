@@ -2,108 +2,85 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold flex items-center">
-                <i class="fas fa-clipboard-list text-primary mr-2"></i>
-                Exam Results
-            </h1>
-            <div class="flex space-x-4">
-                <a href="{{ url_for('download_exam_results', exam_id=exam.id) }}" 
-                   class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Download Results
-                </a>
-                <a href="{{ url_for('dashboard') }}" 
-                   class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
-                </a>
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold mb-2">Exam Results</h1>
+                <p class="text-gray-400">Completed on {{ exam.date_taken.strftime('%B %d, %Y at %I:%M %p') }}</p>
             </div>
-        </div>
-    </div>
 
-    <!-- Exam Summary -->
-    <div class="grid md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold">Score</h3>
-                <i class="fas fa-percentage text-2xl text-primary"></i>
-            </div>
-            <p class="text-3xl font-bold">{{ "%.1f"|format(exam.score) }}%</p>
-        </div>
-
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold">Questions</h3>
-                <i class="fas fa-question-circle text-2xl text-secondary"></i>
-            </div>
-            <p class="text-3xl font-bold">{{ exam.total_questions }}</p>
-        </div>
-
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold">Time Taken</h3>
-                <i class="fas fa-clock text-2xl text-yellow-500"></i>
-            </div>
-            <p class="text-3xl font-bold">{{ exam.time_taken }} min</p>
-        </div>
-
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold">Date</h3>
-                <i class="fas fa-calendar text-2xl text-indigo-500"></i>
-            </div>
-            <p class="text-xl font-bold">{{ exam.date_taken.strftime('%Y-%m-%d') }}</p>
-            <p class="text-lg">{{ exam.date_taken.strftime('%H:%M') }}</p>
-        </div>
-    </div>
-
-    <!-- Question Review -->
-    <div class="bg-gray-800 rounded-lg shadow-lg p-6">
-        <h2 class="text-xl font-bold mb-6 flex items-center">
-            <i class="fas fa-list-alt text-primary mr-2"></i>
-            Question Review
-        </h2>
-
-        <div class="space-y-6">
-            {% for question in exam.questions %}
-            <div class="bg-gray-700 rounded-lg p-4">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <p class="font-medium mb-4">{{ question.text }}</p>
-                        
-                        <!-- Options -->
-                        <div class="space-y-2 mb-4">
-                            {% for option in question.options %}
-                            <div class="flex items-center space-x-2">
-                                <div class="w-4 h-4 rounded-full 
-                                    {% if loop.index0 in question.correct_answer %}bg-green-500
-                                    {% elif loop.index0 in question.user_answer %}bg-red-500
-                                    {% else %}bg-gray-500{% endif %}">
-                                </div>
-                                <span>{{ option }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-
-                        <!-- Explanation -->
-                        <div class="bg-gray-800 p-3 rounded">
-                            <p class="text-sm text-gray-300">
-                                <strong>Explanation:</strong> {{ question.explanation }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Result Badge -->
-                    <div class="ml-4">
-                        {% if question.is_correct %}
-                        <span class="bg-green-800 text-green-200 px-2 py-1 rounded text-sm">Correct</span>
-                        {% else %}
-                        <span class="bg-red-800 text-red-200 px-2 py-1 rounded text-sm">Incorrect</span>
-                        {% endif %}
+            <!-- Score Circle -->
+            <div class="flex justify-center mb-8">
+                <div class="relative w-48 h-48">
+                    <svg class="w-full h-full" viewBox="0 0 36 36">
+                        <path d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="#374151"
+                            stroke-width="3"
+                        />
+                        <path d="M18 2.0845
+                            a 15.9155 15.9155 0 0 1 0 31.831
+                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="{{ 'rgb(34, 197, 94)' if exam.score >= 70 else 'rgb(239, 68, 68)' }}"
+                            stroke-width="3"
+                            stroke-dasharray="{{ exam.score }}, 100"
+                        />
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-4xl font-bold">{{ "%.1f"|format(exam.score) }}%</span>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+
+            <!-- Statistics Grid -->
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-sm text-gray-400 mb-1">Total Questions</p>
+                    <p class="text-2xl font-bold">{{ exam.total_questions }}</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-sm text-gray-400 mb-1">Time Taken</p>
+                    <p class="text-2xl font-bold">{{ exam.time_taken }} min</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-sm text-gray-400 mb-1">Correct Answers</p>
+                    <p class="text-2xl font-bold text-green-500">{{ (exam.score * exam.total_questions / 100)|round|int }}</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-sm text-gray-400 mb-1">Incorrect Answers</p>
+                    <p class="text-2xl font-bold text-red-500">{{ exam.total_questions - (exam.score * exam.total_questions / 100)|round|int }}</p>
+                </div>
+            </div>
+
+            <!-- Result Message -->
+            <div class="text-center mb-8">
+                {% if exam.score >= 70 %}
+                <div class="bg-green-900 bg-opacity-50 text-green-300 p-4 rounded-lg">
+                    <i class="fas fa-check-circle text-3xl mb-2"></i>
+                    <h2 class="text-xl font-bold">Congratulations!</h2>
+                    <p>You have passed the exam with a score of {{ "%.1f"|format(exam.score) }}%</p>
+                </div>
+                {% else %}
+                <div class="bg-red-900 bg-opacity-50 text-red-300 p-4 rounded-lg">
+                    <i class="fas fa-times-circle text-3xl mb-2"></i>
+                    <h2 class="text-xl font-bold">Keep Practicing</h2>
+                    <p>You need a score of 70% or higher to pass. Your score: {{ "%.1f"|format(exam.score) }}%</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-center space-x-4">
+                <a href="{{ url_for('dashboard') }}" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-home mr-2"></i>Back to Dashboard
+                </a>
+                <a href="{{ url_for('start_exam') }}" class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                    <i class="fas fa-redo mr-2"></i>Try Again
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -10,69 +10,147 @@
     {{ total_time|tojson|safe }}
 </script>
 {% endif %}
+<script id="exam-mode" type="application/json">
+    {{ mode|tojson|safe }}
+</script>
+<script id="exam-settings" type="application/json">
+    {{ settings|tojson|safe }}
+</script>
+<script id="resume-index" type="application/json">
+    {{ resume_index|default(0)|tojson|safe }}
+</script>
 
-<div class="max-w-4xl mx-auto">
-    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
-        <div class="flex items-center justify-between mb-4">
-            <h1 class="text-2xl font-bold">Security+ Practice Exam</h1>
-            <div class="flex items-center space-x-4">
-                <div class="text-xl" id="timer-container">
-                    <i class="fas fa-clock text-primary mr-2"></i>
-                    <span id="timer"></span>
+<div class="container mx-auto px-4 py-8">
+    <!-- Top Bar with Timer and Progress -->
+    <div class="bg-gradient-to-r from-gray-800 to-gray-700 p-6 rounded-t-lg shadow-lg border border-gray-700">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <h1 class="text-3xl font-bold text-white flex items-center">
+                <i class="fas fa-shield-alt text-blue-400 mr-3"></i>
+                Security+ Practice Exam
+            </h1>
+            <div class="flex items-center space-x-6">
+                <div class="text-xl bg-gray-900 px-4 py-2 rounded-lg" id="timer-container">
+                    <i class="fas fa-clock text-blue-400 mr-2"></i>
+                    <span id="timer" class="font-mono"></span>
+                    <button id="pause-timer" class="ml-2 text-white hover:text-blue-400 transition-colors" style="display: none;">
+                        <i class="fas fa-pause"></i>
+                    </button>
                 </div>
-                <div class="text-xl">
-                    <i class="fas fa-question-circle text-secondary mr-2"></i>
-                    Question <span id="current-question-num"></span> of <span id="total-questions"></span>
+                <div class="text-xl bg-gray-900 px-4 py-2 rounded-lg">
+                    <i class="fas fa-question-circle text-blue-400 mr-2"></i>
+                    Question <span id="current-question-num" class="font-mono"></span> of <span id="total-questions" class="font-mono"></span>
                 </div>
-            </div>
-        </div>
-
-        <div class="space-y-6">
-            <div class="bg-gray-700 p-4 rounded-lg">
-                <p class="text-lg mb-4" id="question-text"></p>
-                
-                <div class="space-y-3" id="options-container"></div>
-            </div>
-
-            <div id="explanation-container" class="bg-gray-700 p-4 rounded-lg" style="display: none;">
-                <h3 class="text-xl font-semibold mb-2">Explanation</h3>
-                <p id="explanation-text" class="text-gray-300"></p>
-            </div>
-
-            <div class="flex justify-between">
-                <button id="prev-button"
-                        class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>Previous
-                </button>
-
-                <button id="submit-button"
-                        class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    Submit Answer
-                </button>
-
-                <button id="next-button"
-                        style="display: none;"
-                        class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    Next Question
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </button>
             </div>
         </div>
     </div>
 
-    <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
-        <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold">Question Navigation</h2>
-            <div>
-                <span class="text-green-500"><i class="fas fa-check-circle"></i> Correct: <span id="correct-count">0</span></span>
-                <span class="text-red-500"><i class="fas fa-times-circle"></i> Incorrect: <span id="incorrect-count">0</span></span>
-                <span class="text-red-500 ml-4"><i class="fas fa-times-circle"></i> Incorrect: <span x-text="incorrectAnswers"></span></span>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Main Content Area -->
+        <div class="lg:col-span-3">
+            <div class="bg-gray-800 p-6 rounded-b-lg shadow-lg border border-gray-700 space-y-6">
+                <!-- Question Section -->
+                <div class="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-lg shadow-inner">
+                    <div class="flex justify-between items-start gap-4 mb-4">
+                        <p class="text-lg text-gray-100" id="question-text"></p>
+                        <button onclick="editCurrentQuestion()" class="text-blue-400 hover:text-blue-300 transition-colors flex-shrink-0">
+                            <i class="fas fa-edit text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="question-image" class="mb-4"></div>
+                    <div class="space-y-3" id="options-container"></div>
+                </div>
+
+                <!-- Explanation Section -->
+                <div id="explanation-container" class="bg-gradient-to-br from-blue-900/30 to-gray-800 p-6 rounded-lg" style="display: none;">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-200">
+                        <i class="fas fa-lightbulb text-blue-400 mr-2"></i>
+                        Explanation
+                    </h3>
+                    <p id="explanation-text" class="text-gray-300"></p>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between items-center">
+                    <button id="prev-button"
+                            class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i>Previous
+                    </button>
+
+                    <button id="submit-button"
+                            class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center">
+                        <i class="fas fa-check mr-2"></i>Submit Answer
+                    </button>
+
+                    <button id="next-button"
+                            style="display: none;"
+                            class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center">
+                        Next Question<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+
+                    <button id="finish-button"
+                            style="display: none;"
+                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-105 flex items-center">
+                        <i class="fas fa-flag-checkered mr-2"></i>Finish Exam
+                    </button>
+                </div>
             </div>
         </div>
-        <div id="navigation-grid" class="grid grid-cols-10 gap-2 mt-4"></div>
+
+        <!-- Question Navigation Sidebar -->
+        <div class="lg:col-span-1">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 sticky top-4">
+                <div class="space-y-4">
+                    <h2 class="text-xl font-semibold text-white flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
+                        Question Map
+                    </h2>
+                    
+                    <!-- Stats Section -->
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="bg-gray-700 p-3 rounded-lg text-center">
+                            <div class="text-green-400 text-2xl mb-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="text-sm text-gray-400">Correct</div>
+                            <div class="text-xl font-bold text-green-400" id="correct-count">0</div>
+                        </div>
+                        <div class="bg-gray-700 p-3 rounded-lg text-center">
+                            <div class="text-red-400 text-2xl mb-1">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="text-sm text-gray-400">Incorrect</div>
+                            <div class="text-xl font-bold text-red-400" id="incorrect-count">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Question Grid -->
+                    <div id="navigation-grid" class="grid grid-cols-5 gap-2"></div>
+
+                    <!-- Legend -->
+                    <div class="bg-gray-700 p-3 rounded-lg space-y-2">
+                        <div class="text-sm text-gray-300 font-medium">Legend:</div>
+                        <div class="flex items-center text-sm">
+                            <div class="w-6 h-6 bg-gray-600 rounded mr-2"></div>
+                            <span>Not Answered</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <div class="w-6 h-6 bg-green-600 rounded mr-2"></div>
+                            <span>Correct</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <div class="w-6 h-6 bg-red-600 rounded mr-2"></div>
+                            <span>Incorrect</span>
+                        </div>
+                        <div class="flex items-center text-sm">
+                            <div class="w-6 h-6 bg-yellow-600 rounded mr-2"></div>
+                            <span>Current Question</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -85,10 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
     timeRemaining: null,
     timer: null,
     correctAnswers: 0,
+    isPaused: false,
+    examMode: null,
+    settings: null,
+    startTime: Date.now(),
     
     // DOM Elements
     elements: {
       timer: document.getElementById('timer'),
+      pauseTimer: document.getElementById('pause-timer'),
       currentQuestionNum: document.getElementById('current-question-num'),
       totalQuestions: document.getElementById('total-questions'),
       questionText: document.getElementById('question-text'),
@@ -98,62 +181,36 @@ document.addEventListener('DOMContentLoaded', () => {
       prevButton: document.getElementById('prev-button'),
       submitButton: document.getElementById('submit-button'),
       nextButton: document.getElementById('next-button'),
+      finishButton: document.getElementById('finish-button'),
       navigationGrid: document.getElementById('navigation-grid'),
       correctCount: document.getElementById('correct-count'),
       incorrectCount: document.getElementById('incorrect-count')
     },
-    
-    // Initialize the application
-    init(questions, totalTime) {
+
+    init(questions, totalTime, mode, settings, resumeIndex) {
       this.questions = questions;
-      this.timeRemaining = totalTime ? totalTime * 60 : null;
-      this.selectedAnswers = [];
-      this.questionStatus = {};
-      this.correctAnswers = 0;
+      this.timeRemaining = totalTime ? totalTime * 60 : null;  // Convert to seconds
+      this.examMode = mode;
+      this.settings = settings || {};
+      this.currentQuestionIndex = resumeIndex || 0;
       
-      if (this.timeRemaining) {
-        this.startTimer();
-      }
-      
+      this.setupEventListeners();
       this.renderQuestion();
       this.renderNavigationGrid();
       this.updateStats();
-      this.setupEventListeners();
+      
+      if (mode === 'timed' && totalTime) {
+        this.elements.pauseTimer.style.display = 'inline-block';
+        this.startTimer();
+      }
+
+      if (mode === 'review' || this.settings.show_explanations) {
+        this.showExplanation();
+      }
     },
-    
-    // Get the current question
-    getCurrentQuestion() {
-      return this.questions[this.currentQuestionIndex];
-    },
-    
-    // Check if this is the last question
-    isLastQuestion() {
-      return this.currentQuestionIndex === this.questions.length - 1;
-    },
-    
-    // Get exam progress as percentage
-    getProgress() {
-      return Math.round((this.currentQuestionIndex + 1) / this.questions.length * 100);
-    },
-    
-    // Check if current question has been answered
-    isAnswered() {
-      return this.questionStatus[this.currentQuestionIndex] !== undefined;
-    },
-    
-    // Get count of correct answers
-    getCorrectAnswersCount() {
-      return Object.values(this.questionStatus).filter(status => status === 'correct').length;
-    },
-    
-    // Get count of incorrect answers
-    getIncorrectAnswersCount() {
-      return Object.values(this.questionStatus).filter(status => status === 'incorrect').length;
-    },
-    
-    // Start the exam timer
+
     startTimer() {
-      if (!this.timer) {
+      if (!this.isPaused) {
         this.timer = setInterval(() => {
           if (this.timeRemaining > 0) {
             this.timeRemaining--;
@@ -164,8 +221,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
       }
     },
+
+    toggleTimer() {
+      if (this.isPaused) {
+        this.isPaused = false;
+        this.elements.pauseTimer.innerHTML = '<i class="fas fa-pause"></i>';
+        this.startTimer();
+      } else {
+        this.isPaused = true;
+        this.elements.pauseTimer.innerHTML = '<i class="fas fa-play"></i>';
+        clearInterval(this.timer);
+      }
+    },
+
+    async finishExam() {
+      clearInterval(this.timer);
+      
+      const totalQuestions = this.questions.length;
+      const correctAnswers = this.getCorrectAnswersCount();
+      const score = (correctAnswers / totalQuestions) * 100;
+      const timeTaken = Math.floor((Date.now() - this.startTime) / 1000);  // in seconds
+
+      // Get incorrect question IDs
+      const incorrectQuestions = [];
+      Object.entries(this.questionStatus).forEach(([index, status]) => {
+        if (status && status.isAnswered && !status.isCorrect) {
+          incorrectQuestions.push(this.questions[index].id);
+        }
+      });
+
+      console.log("Incorrect questions to submit:", incorrectQuestions);  // Debug log
+
+      try {
+        const response = await fetch('/finish-exam', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            score: score,
+            total_questions: totalQuestions,
+            time_taken: timeTaken,
+            incorrect_questions: incorrectQuestions
+          })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          window.location.href = data.redirect_url;
+        }
+      } catch (error) {
+        console.error('Error submitting exam:', error);
+      }
+    },
+
+    getCurrentQuestion() {
+      return this.questions[this.currentQuestionIndex];
+    },
     
-    // Format time for display
+    isLastQuestion() {
+      return this.currentQuestionIndex === this.questions.length - 1;
+    },
+    
+    getProgress() {
+      return Math.round((this.currentQuestionIndex + 1) / this.questions.length * 100);
+    },
+    
+    isAnswered() {
+      return this.questionStatus[this.currentQuestionIndex] !== undefined;
+    },
+    
+    getCorrectAnswersCount() {
+      return Object.values(this.questionStatus).filter(status => status && status.isCorrect).length;
+    },
+    
+    getIncorrectAnswersCount() {
+      return Object.values(this.questionStatus).filter(status => status && !status.isCorrect).length;
+    },
+    
     formatTime(seconds) {
       if (!seconds && seconds !== 0) return '--:--';
       const minutes = Math.floor(seconds / 60);
@@ -173,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     },
     
-    // Toggle an answer selection
     toggleAnswer(index) {
       if (this.isAnswered()) return;
       
@@ -187,44 +319,46 @@ document.addEventListener('DOMContentLoaded', () => {
       this.updateOptionStyles();
     },
     
-    // Check if an answer is selected
     isSelectedAnswer(index) {
       return this.selectedAnswers.includes(index);
     },
     
-    // Check if an answer is correct
     isCorrectAnswer(index) {
       return this.getCurrentQuestion().correct_answers.includes(index);
     },
     
-    // Submit the current answer
-    async submitAnswer() {
-      try {
-        const response = await fetch('/submit-answer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            question_id: this.getCurrentQuestion().id,
-            answer: this.selectedAnswers
-          })
+    submitAnswer() {
+      if (!this.isAnswered()) {
+        const selectedAnswers = [];
+        const options = this.elements.optionsContainer.querySelectorAll('input[type="checkbox"]');
+        options.forEach((option, index) => {
+          if (option.checked) {
+            selectedAnswers.push(index);
+          }
         });
 
-        const result = await response.json();
-        this.questionStatus[this.currentQuestionIndex] = result.correct ? 'correct' : 'incorrect';
+        const currentQuestion = this.getCurrentQuestion();
+        const isCorrect = this.arraysEqual(selectedAnswers.sort(), currentQuestion.correct_answers.sort());
         
-        this.updateStats();
+        // Update question status
+        this.questionStatus[this.currentQuestionIndex] = {
+          isAnswered: true,
+          isCorrect: isCorrect,
+          selectedAnswers: selectedAnswers
+        };
+
+        // Update UI
         this.updateOptionStyles();
-        this.showExplanation();
-        this.updateButtonVisibility();
         this.updateNavigationGrid();
-      } catch (error) {
-        console.error('Error submitting answer:', error);
+        this.updateStats();
+        this.updateButtonVisibility();
+
+        if (this.examMode === 'review' || this.settings.show_explanations) {
+          this.showExplanation();
+        }
       }
     },
     
-    // Go to previous question
     previousQuestion() {
       if (this.currentQuestionIndex > 0) {
         this.currentQuestionIndex--;
@@ -235,7 +369,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     
-    // Go to next question
     nextQuestion() {
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
@@ -248,7 +381,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     
-    // Navigate to a specific question
     goToQuestion(index) {
       this.currentQuestionIndex = index;
       this.selectedAnswers = [];
@@ -257,17 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.updateNavigationGrid();
     },
     
-    // Finish the exam
-    finishExam() {
-      if (this.timer) {
-        clearInterval(this.timer);
-        this.timer = null;
-      }
-      const score = Math.round((this.getCorrectAnswersCount() / this.questions.length) * 100);
-      window.location.href = `/exam-results?score=${score}&total=${this.questions.length}`;
-    },
-    
-    // Render the current question
     renderQuestion() {
       const question = this.getCurrentQuestion();
       
@@ -277,6 +398,17 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Update question text
       this.elements.questionText.textContent = question.question_text;
+      
+      // Render question image if exists
+      const imageContainer = document.getElementById('question-image');
+      imageContainer.innerHTML = '';
+      if (question.image_url) {
+        const img = document.createElement('img');
+        img.src = question.image_url;
+        img.alt = 'Question Image';
+        img.className = 'max-w-full h-auto rounded-lg';
+        imageContainer.appendChild(img);
+      }
       
       // Clear and create options
       this.elements.optionsContainer.innerHTML = '';
@@ -311,7 +443,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     
-    // Update option styles based on selection and correctness
     updateOptionStyles() {
       const optionLabels = this.elements.optionsContainer.querySelectorAll('label');
       
@@ -333,18 +464,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
     
-    // Show the explanation for the current question
     showExplanation() {
       this.elements.explanationContainer.style.display = 'block';
       this.elements.explanationText.textContent = this.getCurrentQuestion().explanation;
     },
     
-    // Hide the explanation container
     hideExplanation() {
       this.elements.explanationContainer.style.display = 'none';
     },
     
-    // Update button visibility based on state
     updateButtonVisibility() {
       // Previous button
       this.elements.prevButton.disabled = this.currentQuestionIndex === 0;
@@ -352,23 +480,20 @@ document.addEventListener('DOMContentLoaded', () => {
       // Submit button visibility
       if (this.isAnswered()) {
         this.elements.submitButton.style.display = 'none';
-        this.elements.nextButton.style.display = 'block';
+        if (this.isLastQuestion()) {
+          this.elements.nextButton.style.display = 'none';
+          this.elements.finishButton.style.display = 'block';
+        } else {
+          this.elements.nextButton.style.display = 'block';
+          this.elements.finishButton.style.display = 'none';
+        }
       } else {
         this.elements.submitButton.style.display = 'block';
         this.elements.nextButton.style.display = 'none';
-      }
-      
-      // Next button text
-      if (this.isLastQuestion()) {
-        this.elements.nextButton.textContent = 'Finish Exam';
-        this.elements.nextButton.classList.add('bg-green-500', 'hover:bg-green-600');
-      } else {
-        this.elements.nextButton.textContent = 'Next Question';
-        this.elements.nextButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+        this.elements.finishButton.style.display = 'none';
       }
     },
     
-    // Update the navigation grid
     renderNavigationGrid() {
       this.elements.navigationGrid.innerHTML = '';
       
@@ -385,16 +510,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
     
-    // Update a single navigation button
     updateNavigationButton(button, index) {
       // Reset classes
       button.className = 'w-10 h-10 rounded-lg font-bold transition-colors';
       
       if (!this.questionStatus[index]) {
         button.classList.add('bg-gray-600');
-      } else if (this.questionStatus[index] === 'correct') {
+      } else if (this.questionStatus[index] && this.questionStatus[index].isCorrect) {
         button.classList.add('bg-green-500');
-      } else if (this.questionStatus[index] === 'incorrect') {
+      } else if (this.questionStatus[index] && !this.questionStatus[index].isCorrect) {
         button.classList.add('bg-red-500');
       }
       
@@ -404,7 +528,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     
-    // Update the navigation grid without recreating it
     updateNavigationGrid() {
       const buttons = this.elements.navigationGrid.querySelectorAll('button');
       
@@ -413,34 +536,58 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
     
-    // Update timer display
     updateTimerDisplay() {
       if (this.elements.timer) {
         this.elements.timer.textContent = this.formatTime(this.timeRemaining);
       }
     },
     
-    // Update statistics display
     updateStats() {
       this.elements.correctCount.textContent = this.getCorrectAnswersCount();
       this.elements.incorrectCount.textContent = this.getIncorrectAnswersCount();
     },
     
-    // Set up all event listeners
     setupEventListeners() {
       this.elements.prevButton.addEventListener('click', () => this.previousQuestion());
-      this.elements.submitButton.addEventListener('click', () => this.submitAnswer());
       this.elements.nextButton.addEventListener('click', () => this.nextQuestion());
-    }
+      this.elements.submitButton.addEventListener('click', () => this.submitAnswer());
+      this.elements.finishButton.addEventListener('click', () => this.finishExam());
+      this.elements.pauseTimer.addEventListener('click', () => this.toggleTimer());
+    },
+    
+    editCurrentQuestion() {
+      const question = this.getCurrentQuestion();
+      // Pause timer if it's running
+      if (this.timer) {
+        this.toggleTimer();
+      }
+      
+      // Open edit modal with current question data
+      window.location.href = `/edit-question/${question.id}?return_to_exam=true&index=${this.currentQuestionIndex}`;
+    },
+    
+    arraysEqual(arr1, arr2) {
+      if (arr1.length !== arr2.length) return false;
+      for (let i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
+      }
+      return true;
+    },
   };
   
-  // Initialize the app with questions and time limit from the server
-  // This assumes the questions and totalTime are available in the global scope
-  app.init(
-    JSON.parse(document.getElementById('question-data').textContent),
-    document.getElementById('time-data') ? parseInt(document.getElementById('time-data').textContent) : null
-  );
+  // Add to window object so onclick handler can access it
+  window.editCurrentQuestion = () => app.editCurrentQuestion();
+  
+  // Initialize the app with questions, time limit, mode, settings, and resume index from the server
+  const questions = JSON.parse(document.getElementById('question-data').textContent);
+  const totalTime = document.getElementById('time-data')?.textContent 
+    ? parseInt(JSON.parse(document.getElementById('time-data').textContent))
+    : null;
+  const mode = JSON.parse(document.getElementById('exam-mode').textContent);
+  const settings = JSON.parse(document.getElementById('exam-settings').textContent || '{}');
+  const resumeIndex = parseInt(JSON.parse(document.getElementById('resume-index').textContent));
+  
+  app.init(questions, totalTime, mode, settings, resumeIndex);
 });
-
 </script>
 {% endblock %}

@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8 border border-gray-700">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-book text-blue-400 mr-3"></i>
+                Question Bank
+            </h1>
+            <div class="flex items-center space-x-4">
+                <!-- Export Button -->
+                <a href="{{ url_for('export_question_bank') }}" 
+                   class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors flex items-center">
+                    <i class="fas fa-download mr-2"></i>
+                    Export Questions
+                </a>
+                <!-- Import Button -->
+                <label class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition-colors flex items-center cursor-pointer relative">
+                    <i class="fas fa-upload mr-2"></i>
+                    <span id="importLabel">Import Questions</span>
+                    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importQuestions(this)">
+                    <div id="importSpinner" class="hidden absolute inset-0 bg-green-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <span class="ml-2">Importing...</span>
+                    </div>
+                </label>
+                <!-- Add Question Button -->
+                <a href="{{ url_for('add_question') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500 transition-colors flex items-center">
+                    <i class="fas fa-plus mr-2"></i>
+                    Add Question
+                </a>
+                <a href="{{ url_for('dashboard') }}" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8 border border-gray-700">
+        <div class="flex flex-wrap gap-4">
+            <div class="flex-1 min-w-[200px]">
+                <input type="text" id="searchInput" placeholder="Search questions..." 
+                    class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400">
+            </div>
+            <div class="w-48">
+                <select id="filterSelect" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white">
+                    <option value="">All Categories</option>
+                    <option value="marked">Marked Questions</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question List -->
+    <div class="bg-gray-800 rounded-lg shadow-lg border border-gray-700">
+        <div class="p-6">
+            <div class="grid gap-4" id="questionList">
+                {% for question in questions %}
+                <div class="question-item bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors" 
+                     data-category="{{ question.category }}" 
+                     data-marked="{{ question.is_marked|lower }}">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="text-lg font-semibold text-white flex-1 mr-4">{{ question.question_text }}</h4>
+                        <div class="flex items-center space-x-2 flex-shrink-0">
+                            <button onclick="toggleMarkQuestion({{ question.id }})" 
+                                    class="text-yellow-400 hover:text-yellow-300 transition-colors">
+                                <i class="fas {% if question.is_marked %}fa-star{% else %}fa-star-o{% endif %}"></i>
+                            </button>
+                            <a href="{{ url_for('edit_question', question_id=question.id) }}" 
+                               class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button onclick="confirmDeleteQuestion({{ question.id }})" 
+                                    class="text-red-400 hover:text-red-300 transition-colors">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% if question.category %}
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-semibold bg-blue-900 text-blue-200">
+                        {{ question.category }}
+                    </span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-6 py-4 border-t border-gray-700 bg-gray-900 rounded-b-lg">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-300">
+                    Total Questions: <span class="font-bold text-blue-400">{{ questions|length }}</span>
+                </div>
+                <button onclick="confirmDeleteAll()" 
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-colors flex items-center">
+                    <i class="fas fa-trash-alt mr-2"></i>
+                    Remove All Questions
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Search and Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('filterSelect');
+    
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterValue = filterSelect.value.toLowerCase();
+        const questions = document.querySelectorAll('.question-item');
+        
+        questions.forEach(question => {
+            const text = question.querySelector('h4').textContent.toLowerCase();
+            const category = question.dataset.category.toLowerCase();
+            const isMarked = question.dataset.marked === 'true';
+            
+            const matchesSearch = text.includes(searchTerm);
+            const matchesFilter = !filterValue || 
+                                (filterValue === 'marked' && isMarked) || 
+                                category === filterValue;
+            
+            question.style.display = matchesSearch && matchesFilter ? 'block' : 'none';
+        });
+    }
+
+    if (searchInput && filterSelect) {
+        searchInput.addEventListener('input', applyFilters);
+        filterSelect.addEventListener('change', applyFilters);
+    }
+});
+
+function confirmDeleteQuestion(questionId) {
+    if (confirm('Are you sure you want to delete this question?')) {
+        window.location.href = `{{ url_for('delete_question_redirect', question_id=0) }}`.replace('0', questionId);
+    }
+}
+
+function confirmDeleteAll() {
+    if (confirm('Are you sure you want to delete all questions? This action cannot be undone.')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{{ url_for('delete_all_questions') }}";
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function toggleMarkQuestion(questionId) {
+    fetch(`{{ url_for('toggle_mark_question', question_id=0) }}`.replace('0', questionId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const button = event.target.closest('button');
+            const icon = button.querySelector('i');
+            icon.classList.toggle('fa-star');
+            icon.classList.toggle('fa-star-o');
+            const questionItem = button.closest('.question-item');
+            questionItem.dataset.marked = data.is_marked;
+        }
+    });
+}
+
+function importQuestions(input) {
+    if (input.files && input.files[0]) {
+        const formData = new FormData();
+        formData.append('file', input.files[0]);
+        
+        // Show loading state
+        const importSpinner = document.getElementById('importSpinner');
+        importSpinner.classList.remove('hidden');
+        
+        fetch('{{ url_for("import_question_bank") }}', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                importSpinner.classList.add('hidden');
+                alert('Error importing questions. Please try again.');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            importSpinner.classList.add('hidden');
+            alert('Error importing questions. Please try again.');
+        });
+    }
+}
+
+// Add file size validation
+document.getElementById('importFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        // Check if file is larger than 50MB
+        if (file.size > 50 * 1024 * 1024) {
+            alert('File is too large. Please choose a file smaller than 50MB.');
+            e.target.value = '';  // Clear the file input
+            return;
+        }
+        
+        // Check if file is JSON
+        if (!file.name.toLowerCase().endsWith('.json')) {
+            alert('Please select a JSON file.');
+            e.target.value = '';  // Clear the file input
+            return;
+        }
+    }
+});
+
+</script>
+{% endblock %}

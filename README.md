@@ -1,14 +1,6 @@
 # Security+ Exam Preparation Website
 
-A modern, feature-rich web application for practicing Security+ exam questions with a beautiful dark theme UI.
-
-![image](https://github.com/user-attachments/assets/57a2167d-8b2f-4df7-971f-f338f18a1d13)
-![image](https://github.com/user-attachments/assets/4d0d203b-dcb1-46ba-9740-81d5f9519695)
-![image](https://github.com/user-attachments/assets/e357d296-2c29-486a-adaf-33650ff6668c)
-![image](https://github.com/user-attachments/assets/14b299cd-ed65-4c71-9f13-07c8cc1c1a20)
-
-
-
+A modern, feature-rich web application for practicing Security+ exam questions with a beautiful dark theme UI. Designed specifically for CompTIA Security+ exam preparation.
 
 ## Features
 
@@ -19,13 +11,17 @@ A modern, feature-rich web application for practicing Security+ exam questions w
 - Progress tracking and exam history
 - Modern dark theme UI with animations
 - PDF question import functionality
+- Question bank management
 
 ## Setup Instructions
+
+### Local Setup
 
 1. Create a virtual environment and activate it:
 ```bash
 python -m venv venv
-.\venv\Scripts\activate
+.\venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/Mac
 ```
 
 2. Install dependencies:
@@ -33,7 +29,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-3. OPTINAL Import questions from your PDF: (u can do this in the UI)
+3. Import questions from your PDF:
 ```bash
 python pdf_import.py path/to/your/questions.pdf [options]
 ```
@@ -51,6 +47,25 @@ python app.py
 
 5. Visit http://localhost:5000 in your browser
 
+### Docker Setup
+
+1. Build the Docker image:
+```bash
+docker build -t security-plus-exam .
+```
+
+2. Run the container:
+```bash
+docker run -d -p 5000:5000 --name security-plus-app security-plus-exam
+```
+
+3. Import questions (if needed):
+```bash
+docker exec -it security-plus-app python pdf_import.py /app/SY0-701-premium\ -\ converted.pdf
+```
+
+4. Visit http://localhost:5000 in your browser
+
 ## Features
 
 ### Exam Configuration
@@ -64,6 +79,7 @@ python app.py
 - View exam history and statistics
 - Resume interrupted exams
 - Review incorrect answers
+- Manage question bank
 
 ### UI Features
 - Modern dark theme
@@ -80,3 +96,4 @@ python app.py
 - Alpine.js (JavaScript framework)
 - PyPDF2 (PDF parsing)
 - Font Awesome (Icons)
+- Docker (Containerization)

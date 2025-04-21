@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    container_name: security_plus_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./static/uploads:/app/static/uploads
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+    depends_on: []
+    restart: unless-stopped

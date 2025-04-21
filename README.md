@@ -44,7 +44,7 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-3. Import questions from your PDF:
+3. Import questions from your PDF (if Needed u can do it in the UI ):
 ```bash
 python pdf_import.py path/to/your/questions.pdf [options]
 ```
@@ -74,7 +74,7 @@ docker build -t security-plus-exam .
 docker run -d -p 5000:5000 --name security-plus-app security-plus-exam
 ```
 
-3. Import questions (if needed):
+3. Import questions (if Needed u can do it in the UI ):
 ```bash
 docker exec -it security-plus-app python pdf_import.py /app/SY0-701-premium\ -\ converted.pdf
 ```

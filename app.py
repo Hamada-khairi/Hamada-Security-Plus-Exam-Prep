@@ -19,6 +19,13 @@ import shutil
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///securityplus.db'
+
+# Flask-Session setup for server-side session storage
+from flask_session import Session
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+Session(app)
+
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -257,6 +264,23 @@ def update_question(question_id):
     return_to_exam = request.form.get('return_to_exam')
     exam_index = request.form.get('exam_index')
     
+    print('DEBUG: update_question - session keys before update:', list(session.keys()))
+    # If exam is active, update the session's exam_questions list with the new question data
+    if 'exam_questions' in session:
+        questions_data = session['exam_questions']
+        for idx, q in enumerate(questions_data):
+            if q['id'] == question.id:
+                # Update the question data in session to reflect the latest changes
+                q['question_text'] = question.question_text
+                q['options'] = question.options
+                q['correct_answers'] = question.correct_answers
+                q['explanation'] = question.explanation
+                q['category'] = question.category
+                q['image_url'] = question.image_url
+                break
+        session['exam_questions'] = questions_data
+
+    print('DEBUG: update_question - session keys after update:', list(session.keys()))
     if return_to_exam and exam_index:
         flash('Question updated successfully!', 'success')
         return redirect(url_for('resume_exam', index=exam_index))
@@ -358,22 +382,46 @@ def start_exam():
         flash('No questions available. Please add questions first.', 'error')
         return redirect(url_for('dashboard'))
     
-    questions_data = [
-        {
+    questions_data = []
+    for q in questions:
+        question_data = {
             'id': q.id,
             'question_text': q.question_text,
-            'options': q.options if not settings['shuffle_answers'] else random.sample(q.options, len(q.options)),
-            'correct_answers': q.correct_answers,
             'explanation': q.explanation,
             'image_url': q.image_url
-        } for q in questions
-    ]
+        }
+        
+        # Handle shuffling of options while preserving correct answers
+        if settings['shuffle_answers']:
+            # Get the original correct options (actual text values)
+            original_correct_options = [q.options[i] for i in q.correct_answers]
+            
+            # Shuffle the options
+            shuffled_options = random.sample(q.options, len(q.options))
+            question_data['options'] = shuffled_options
+            
+            # Find the new indices of the correct options in the shuffled list
+            new_correct_indices = [shuffled_options.index(option) for option in original_correct_options]
+            question_data['correct_answers'] = new_correct_indices
+        else:
+            # No shuffling, use original options and correct answers
+            question_data['options'] = q.options
+            question_data['correct_answers'] = q.correct_answers
+            
+        questions_data.append(question_data)
+    
+    # Store exam data in session for resuming later
+    session['exam_questions'] = questions_data
+    session['exam_mode'] = mode
+    session['exam_settings'] = settings
+    session['exam_total_time'] = num_questions * time_per_question if is_timed else None
     
     return render_template('exam.html', 
                           questions=questions_data,
                           mode=mode,
                           settings=settings,
-                          total_time=num_questions * time_per_question if is_timed else None)
+                          total_time=num_questions * time_per_question if is_timed else None,
+                          resume_index=session.get('resume_index', 0))
 
 @app.route('/submit-answer', methods=['POST'])
 @login_required
@@ -513,7 +561,25 @@ def resume_exam():
     index = request.args.get('index', 0, type=int)
     # Add the index to the session so the exam page knows where to resume
     session['resume_index'] = index
-    return redirect(url_for('start_exam'))
+    
+    print('DEBUG: resume_exam - session keys at entry:', list(session.keys()))
+    # Check if we have active exam data in the session
+    if 'exam_questions' not in session:
+        flash('No active exam found. Please start a new exam.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    # Get the exam data from the session
+    questions_data = session.get('exam_questions', [])
+    mode = session.get('exam_mode', 'practice')
+    settings = session.get('exam_settings', {})
+    total_time = session.get('exam_total_time')
+    
+    return render_template('exam.html', 
+                          questions=questions_data,
+                          mode=mode,
+                          settings=settings,
+                          total_time=total_time,
+                          resume_index=index)
 
 @app.route('/question-bank')
 @login_required

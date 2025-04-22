@@ -194,15 +194,24 @@
     </nav>
 
     <main class="container mx-auto px-4 pt-24 pb-8 flex-grow">
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for message in messages %}
-                    <div class="bg-red-500/90 backdrop-blur-sm text-white p-4 rounded-lg mb-4 shadow-lg animate-fade-in border border-red-400/30">
-                        <div class="flex items-center">
-                            <i class="fas fa-exclamation-circle mr-3 text-xl"></i>
-                            <p>{{ message }}</p>
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                        <div class="bg-red-500/90 backdrop-blur-sm text-white p-4 rounded-lg mb-4 shadow-lg animate-fade-in border border-red-400/30">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-circle mr-3 text-xl"></i>
+                                <p>{{ message }}</p>
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <div class="bg-green-600/90 backdrop-blur-sm text-white p-4 rounded-lg mb-4 shadow-lg animate-fade-in border border-green-400/30">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle mr-3 text-xl"></i>
+                                <p>{{ message }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endwith %}

@@ -1,0 +1,1294 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-04-28T02:29:21.645103",
+  "total_questions": 85,
+  "questions": [
+    {
+      "question_text": "A company has hired a third-party to gather information about the\r\ncompany’s servers and data. This third-party will not have direct access to\r\nthe company's internal network, but they can gather information from any\r\nother source. Which of the following would BEST describe this approach?",
+      "options": [
+        "Vulnerability scanning",
+        "Passive reconnaissance",
+        "Supply chain analysis",
+        "Regulatory audit"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Passive reconnaissance\r\nPassive reconnaissance focuses on gathering as much information from\r\nopen sources such as social media, corporate websites, and business\r\norganizations.\r\nThe incorrect answers:\r\nA. Vulnerability scanning\r\nSome active reconnaissance tests will query systems directly to see if a\r\nvulnerability currently exists.\r\nC. Supply chain analysis\r\nA supply chain analysis will examine the security associated with a\r\nsupplier, and the analysis will not provide any information regarding a\r\ncompany's own servers and data.\r\nD. Regulatory audit\r\nA regulatory audit is a detailed security analysis based on existing laws or\r\nprivate guidelines. A regulatory audit commonly requires access to internal\r\nsystems and data.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company's email server has received an email from a third-party, but the\r\norigination server does not match the list of authorized devices. Which of\r\nthe following would determine the disposition of this message?",
+      "options": [
+        "SPF",
+        "NAC",
+        "DMARC",
+        "DKIM"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. DMARC\r\nDMARC (Domain-based Message Authentication Reporting and\r\nConformance) specifies the disposition of spam emails. The legitimate\r\nowner of the originating email domain can choose to have these messages\r\naccepted, sent to a spam folder, or rejected.\r\nThe incorrect answers:\r\nA. SPF\r\nSPF (Sender Policy Framework) is a list of all authorized mail servers for\r\na specific domain. All legitimate emails would be sent from one of the\r\nservers listed in the SPF configuration.\r\nB. NAC\r\nNAC (Network Access Control) is a way to limit network access to only\r\nauthorized users. NAC is not commonly used to manage the transfer of\r\nemail messages.\r\nD. DKIM\r\nDKIM (Domain Keys Identified Mail) provides a way to validate all\r\ndigitally signed messages from a specific email server. DKIM does not\r\ndetermine how the receiving server categorizes these digitally signed\r\nmessages.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of these threat actors would be MOST likely to attack systems for\r\ndirect financial gain?",
+      "options": [
+        "Organized crime",
+        "Hacktivist",
+        "Nation state",
+        "Shadow IT"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Organized crime\r\nAn organized crime actor is motivated by money, and their hacking\r\nobjectives are usually based around objectives that can be easily exchanged\r\nfor financial capital.\r\nThe incorrect answers:\r\nB. Hacktivist\r\nA hacktivist is focused on a political agenda and not commonly on a\r\nfinancial gain.\r\nC. Nation state\r\nNation states are already well funded, and their primary objective is not\r\nusually based on revenue or income.\r\nD. Shadow IT\r\nShadow IT describes part of the organization that works around the\r\nexisting IT department to build their own applications and infrastructure.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator has examined a server recently compromised by\r\nan attacker, and has determined the system was exploited due to a known\r\noperating system vulnerability. Which of the following would BEST\r\ndescribe this finding?",
+      "options": [
+        "Root cause analysis",
+        "E-discovery",
+        "Risk appetite",
+        "Data subject"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Root cause analysis\r\nThe goal of a root cause analysis is to explain the ultimate cause of an\r\nincident. Once the cause is known, it becomes easier to protect against\r\nsimilar attacks in the future.\r\nThe incorrect answers:\r\nB. E-discovery\r\nE-discovery relates to the collection, preparation, review, interpretation,\r\nand production of electronic documents. E-discovery itself is not involved\r\nwith the research and determination of an attack's root cause.\r\nC. Risk appetite\r\nA risk appetite describes the amount of risk an organization is willing to\r\ntake before taking any action to reduce that risk. Risk appetite is not part\r\nof a root cause analysis.\r\nD. Data subject\r\nA data subject describes any information relating to an identified or\r\nidentifiable natural person, especially when describing or managing private\r\ninformation about the subject.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A city is building an ambulance service network for emergency medical\r\ndispatching. Which of the following should have the highest priority?",
+      "options": [
+        "Integration costs",
+        "Patch availability",
+        "System availability",
+        "Power usage"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. System availability\r\nRequests to emergency services are often critical in nature, and it's\r\nimportant for a dispatching system to always be available when a call is\r\nmade.\r\nThe incorrect answers:\r\nA. Integration costs\r\nWhen lives are on the line, the cost is not commonly the most important\r\naspect of a system integration.\r\nB. Patch availability\r\nAlthough it's important to always keep systems patched, it's more\r\nimportant that a life saving service be available to those who might need it.\r\nD. Power usage\r\nPower usage is not usually the most important consideration when\r\nbuilding a critical healthcare and emergency service infrastructure.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A system administrator receives a text alert when access rights are\r\nchanged on a database containing private customer information. Which\r\nof the following would describe this alert?",
+      "options": [
+        "Maintenance window",
+        "Attestation and acknowledgment",
+        "Automation",
+        "External audit"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Automation\r\nAutomation ensures that compliance checks can be performed on a\r\nregular basis without the need for human intervention. This can be\r\nespecially useful to provide alerts when a configuration change causes an\r\norganization to be out of compliance.\r\nThe incorrect answers:\r\nA. Maintenance window\r\nA maintenance window describes the scheduling associated with the\r\nchange control process. Systems and services generally have limited\r\navailability during a maintenance window.\r\nB. Attestation and acknowledgment\r\nWith compliance, the process of attestation and acknowledgment is the\r\nfinal verification of the formal compliance documentation. An alert from\r\nan automated process would not qualify as attestation.\r\nD. External audit\r\nAn external audit can be a valuable tool for verifying the compliance\r\nprocess, but an automated alert from a monitoring system would not be\r\npart of an external audit.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator is concerned about the potential for data\r\nexfiltration using external storage drives. Which of the following would\r\nbe the BEST way to prevent this method of data exfiltration?",
+      "options": [
+        "Create an operating system security policy to block the use of removable media",
+        "Monitor removable media usage in host-based firewall logs",
+        "Monitor removable media usage in host-based firewall logs",
+        "Define a removable media block rule in the UTM"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Create an operating system security policy to prevent\r\nthe use of removable media\r\nRemovable media uses hot-pluggable interfaces such as USB to connect\r\nstorage drives. A security policy in the operating system can prevent any\r\nfiles from being written to a removable drive.\r\nThe incorrect answers:\r\nB. Monitor removable media usage in host-based firewall logs\r\nA host-based firewall monitors traffic flows and does not commonly log\r\nhardware or USB drive access.\r\nC. Only allow applications that do not use removable media\r\nFile storage access options are not associated with applications, so it’s not\r\npossible to allow based on external storage drive usage.\r\nD. Define a removable media block rule in the UTM\r\nA UTM (Unified Threat Manager) watches traffic flows across the\r\nnetwork and does not commonly manage the storage options on individual\r\ncomputers.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company creates a standard set of government reports each calendar\r\nquarter. Which of the following would describe this type of data?",
+      "options": [
+        "Data in use",
+        "Obfuscated",
+        "Trade secrets",
+        "Regulated"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Regulated\r\nReports and information created for governmental use are regulated by\r\nlaws regarding the disclosure of certain types of data.\r\nThe incorrect answers:\r\nA. Data in use\r\nData in use describes information actively processing in the memory of a\r\nsystem, such as system RAM, CPU registers, or CPU cache. Government\r\nreports are static documents and are not actively being processed.\r\nB. Obfuscated\r\nObfuscation describes the modification of data to make something\r\nunderstandable into something very difficult to understand. Information\r\ncontained in a government report is relatively easy to understand and\r\nwould not be considered obfuscated data.\r\nC. Trade secrets\r\nTrade secrets are the private details a company uses as part of their normal\r\nbusiness processes, and these trade secrets are not shared with any other\r\norganization or business.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An insurance company has created a set of policies to handle data\r\nbreaches. The security team has been given this set of requirements based\r\non these policies:\r\n• Access records from all devices must be saved and archived\r\n• Any data access outside of normal working hours\r\nmust be immediately reported\r\n• Data access must only occur inside of the country\r\n• Access logs and audit reports must be created from a single database\r\nWhich of the following should be implemented by the security team to\r\nmeet these requirements? (Select THREE)",
+      "options": [
+        "Restrict login access by IP address and GPS location",
+        "Require government-issued identification during the onboarding process",
+        "Add additional password complexity for accounts that access data",
+        "Conduct monthly permission auditing",
+        "Consolidate all logs on a SIEM",
+        "Archive the encryption keys of all disabled accounts",
+        "Enable time-of-day restrictions on the authentication server"
+      ],
+      "correct_answers": [
+        0,
+        4,
+        6
+      ],
+      "explanation": "The Answer: A. Restrict login access by IP address and GPS location,\r\nE. Consolidate all logs on a SIEM, and\r\nG. Enable time-of-day restrictions on\r\nthe authentication server\r\nAdding location-based policies will prevent direct data access from outside\r\nof the country. Saving log information from all devices and creating audit\r\nreports from a single database can be implemented through the use of a\r\nSIEM (Security Information and Event Manager). Adding a check for the\r\ntime-of-day will report any access that occurs during non-working hours.\r\n\r\nThe incorrect answers:\r\nB. Require government-issued identification during the\r\nonboarding process\r\nRequiring proper identification is always a good idea, but it’s not one of\r\nthe listed requirements.\r\nC. Add additional password complexity for accounts that access data\r\nAdditional password complexity is another good best practice, but it’s not\r\npart of the provided requirements.\r\nD. Conduct monthly permission auditing\r\nNo requirements for ongoing auditing were included in the requirements,\r\nbut ongoing auditing is always an important consideration.\r\nF. Archive the encryption keys of all disabled accounts\r\nIf an account is disabled, there may still be encrypted data that needs to be\r\nrecovered later. Archiving the encryption keys will allow access to that data\r\nafter the account is no longer in use.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security engineer, is viewing this record from the firewall logs:\r\n\r\nWhich of the following can be observed from this log information?",
+      "options": [
+        "The victim's IP address is 136.127.92.171",
+        "A download was blocked from a web server",
+        "A botnet DDoS attack was blocked",
+        "The Trojan was blocked, but the file was not"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. A download was blocked from a web server\r\nA traffic flow from a web server port number (80) to a device port (60818)\r\nindicates that this traffic flow originated on port 80 of the web server. A\r\nfile download is one of the most common ways to deliver a Trojan, and\r\nthis log entry shows that the file containing the XPACK.A_7854 Trojan\r\nwas blocked.\r\nThe incorrect answers:\r\nA. The victim’s IP address is 136.127.92.171\r\nThe format for this log entry uses an arrow to differentiate between the\r\nattacker and the victim. The attacker IP address is 136.127.92.171, and the\r\nvictim’s IP address is 10.16.10.14.\r\nC. A botnet DDoS attack was blocked\r\nA botnet attack would not commonly include a Trojan horse as part of a\r\ndistributed denial of service (DDoS) attack.\r\nD. The Trojan was blocked, but the file was not\r\nA Trojan horse attack involves malware that is disguised as legitimate\r\nsoftware. The Trojan malware and the file are the same entity, so there isn’t\r\na way to decouple the malware from the file.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A user connects to a third-party website and receives this message:\r\n\r\nWhich of the following attacks would be the MOST likely reason\r\nfor this message?",
+      "options": [
+        "Brute force",
+        "DoS",
+        "On-path",
+        "Deauthentication"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. On-path\r\nAn on-path attack is often associated with a third-party who is actively\r\nintercepting network traffic. This entity in the middle would not be able\r\nto provide a valid SSL certificate for a third-party website, and this error\r\nwould appear in the browser as a warning.\r\nThe incorrect answers:\r\nA. Brute force\r\nA brute force attack is commonly associated with password hacks. Brute\r\nforce attacks would not cause the certificate on a website to be invalid.\r\nB. DoS\r\nA DoS (Denial of Service) attack would prevent communication to a\r\nserver and most likely provide a timeout error. This error is not related to a\r\nservice availability issue.\r\nD. Deauthentication\r\nDeauthentication attacks are commonly associated with wireless networks,\r\nand they usually cause disconnects and lack of connectivity. The error\r\nmessage in this example does not appear to be associated with a network\r\noutage or disconnection.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following would be the BEST way to provide a website\r\nlogin using existing credentials from a third-party site?",
+      "options": [
+        "Federation",
+        "802.1X",
+        "EAP",
+        "SSO"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Federation\r\nFederation would allow members of one organization to authenticate\r\nusing the credentials of another organization.\r\nThe incorrect answers:\r\nB. 802.1X\r\n802.1X is a useful authentication protocol, but it needs additional\r\nfunctionality to authenticate across multiple user databases.\r\nC. EAP\r\nEAP (Extensible Authentication Protocol) is an authentication\r\nframework commonly associated with network access control. EAP by\r\nitself does not provide the federation needed to authenticate users to a\r\nthird-party access database.\r\nD. SSO\r\nSSO (Single Sign-On) describes the process of enabling a single\r\nauthentication to grant access to many different network services.\r\nObtaining login credentials from a",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A system administrator is working on a contract that will specify a\r\nminimum required uptime for a set of Internet-facing firewalls. The\r\nadministrator needs to know how often the firewall hardware is expected\r\nto fail between repairs. Which of the following would BEST describe this\r\ninformation?",
+      "options": [
+        "MTBF",
+        "RTO",
+        "MTTR",
+        "RPO"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. MTBF\r\nThe MTBF (Mean Time Between Failures) is a prediction of how often a\r\nrepairable system will fail.\r\nThe incorrect answers:\r\nB. RTO\r\nRTO (Recovery Time Objectives) define a timeframe needed to restore a\r\nparticular service level.\r\nC. MTTR\r\nMTTR (Mean Time to Restore) is the amount of time it takes to repair a\r\ncomponent.\r\nD. RPO\r\nRPO (Recovery Point Objective) describes the minimum data or\r\noperational state required to categorize a system as recovered.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An attacker calls into a company’s help desk and pretends to be the\r\ndirector of the company’s manufacturing department. The attacker\r\nstates that they have forgotten their password and they need to have the\r\npassword reset quickly for an important meeting. What kind of attack\r\nwould BEST describe this phone call?",
+      "options": [
+        "Social engineering",
+        "Supply chain",
+        "Watering hole",
+        "On-path"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Social engineering\r\nThis social engineering attack uses impersonation to take advantage of\r\nauthority and urgency principles in an effort to convince someone else to\r\ncircumvent normal security controls.\r\nThe incorrect answers:\r\nB. Supply chain\r\nA supply chain attack focuses on the equipment or raw materials used to\r\ndeliver products or services to an organization or user. A call to the help\r\ndesk would not be categorized as part of the supply chain.\r\nC. Watering hole\r\nA watering hole attack uses a third-party site to perform attacks outside of\r\na user's local (and usually more secure) network.\r\nD. On-path\r\nAn on-path attack commonly occurs without any knowledge to the parties\r\ninvolved, and there’s usually no additional notification that an attack is\r\nunderway. In this question, the attacker contacted the help desk engineer\r\ndirectly.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Two companies have been working together for a number of months,\r\nand they would now like to qualify their partnership with a broad formal\r\nagreement between both organizations. Which of the following would\r\ndescribe this agreement?",
+      "options": [
+        "SLA",
+        "SOW",
+        "MOA",
+        "NDA"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. MOA\r\nAn MOA (Memorandum of Agreement) is a formal document where\r\nboth sides agree to a broad set of goals and objectives associated with the\r\npartnership.\r\nThe incorrect answers:\r\nA. SLA\r\nAn SLA (Service Level Agreement) is commonly provided as a formal\r\ncontract between two parties that documents the minimum terms for\r\nservices provided. The SLA often provides very specific requirements and\r\nexpectations between both parties.\r\nB. SOW\r\nAn SOW (Statement of Work) is a detailed list of items to be completed\r\nas part of overall project deliverables. For example, a list of expected job\r\ntasks associated with a firewall installation would be documented in an\r\nSOW.\r\nD. NDA\r\nAn NDA (Non-Disclosure Agreement) is a confidentiality agreement\r\nbetween parties. This question did not mention any requirement for\r\nprivacy or confidentiality.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following would explain why a company would\r\nautomatically add a digital signature to each outgoing email message?",
+      "options": [
+        "Confidentiality",
+        "Integrity",
+        "Authentication",
+        "Availability"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Integrity\r\nIntegrity refers to the trustworthiness of data. A digital signature allows\r\nthe recipient to confirm that none of the data has been changed since the\r\ndigital signature was created.\r\nThe incorrect answers:\r\nA. Confidentiality\r\nConfidentiality describes the privacy of data. Encrypting traffic sent over\r\na VPN or encrypting files stored on a flash drive would be an example of\r\ndata confidentiality.\r\nC. Authentication\r\nAuthentication refers to the process of verifying the identity of an\r\nindividual or system. A username and password is a common method\r\nof authentication, but digital signatures are not commonly used as an\r\nauthentication method.\r\nD. Availability\r\nAvailability describes the ability of an authorized user to access data.\r\nA digital signature does not provide any features associated with the\r\navailability of the data.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "The embedded OS in a company’s time clock appliance is configured to\r\nreset the file system and reboot when a file system error occurs. On one\r\nof the time clocks, this file system error occurs during the startup process\r\nand causes the system to constantly reboot. Which of the following\r\nBEST describes this issue?",
+      "options": [
+        "Memory injection",
+        "Resource consumption",
+        "Race condition",
+        "Malicious update"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Race condition\r\nA race condition occurs when two processes occur at similar times, and\r\nusually with unexpected results. The file system problem can often be fixed\r\nbefore a reboot, but the reboot is occurring before the fix can be applied.\r\nThis has created a race condition that results in constant reboots.\r\nThe incorrect answers:\r\nA. Memory injection\r\nA memory injection is commonly used by malicious software to add code\r\nto the memory of an existing process. The issue in this question was related\r\nto a file system error and was not part of a malicious data injection.\r\nB. Resource consumption\r\nIf the time clock was running out of storage space or memory, it would\r\nmost likely be unusable. In this example, the issue isn’t based on a lack of\r\nresources.\r\nD. Malicious update\r\nA malicious update occurs when a software patch installs unwanted or\r\nunauthorized code. Many attackers will use software patches to install\r\ntheir own malicious code during a software update.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A recent audit has found that existing password policies do not include\r\nany restrictions on password attempts, and users are not required to\r\nperiodically change their passwords. Which of the following would\r\ncorrect these policy issues? (Select TWO)",
+      "options": [
+        "Password complexity",
+        "Password expiration",
+        "Password reuse",
+        "Account lockout",
+        "Password managers"
+      ],
+      "correct_answers": [
+        1,
+        3
+      ],
+      "explanation": "The Answer: B. Password expiration and D. Account lockout\r\nPassword expiration would require a password change after the expiration\r\ndate. An account lockout would disable an account after a predefined\r\nnumber of unsuccessful login attempts.\r\nThe incorrect answers:\r\nA. Password complexity\r\nA complex password would make the password more difficult to brute\r\nforce, but it would not solve the issues listed in this question.\r\nC. Password reuse\r\nMaintaining a password history would prevent the reuse of any previous\r\npasswords. Restricting password reuse would ensure that a different\r\npassword is used each time a password change is processed.\r\nE. Password managers\r\nA password manager would provide a way to securely store and retrieve\r\npasswords, but it would not resolve any issues relating to password\r\nexpirations or account lockouts.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "What kind of security control is associated with a login banner?",
+      "options": [
+        "Preventive",
+        "Deterrent",
+        "Corrective",
+        "Detective",
+        "Compensating",
+        "Directive"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Deterrent\r\nA deterrent control does not directly stop an attack, but it may discourage\r\nan action.\r\nThe incorrect answers:\r\nA. Preventive\r\nA preventive control physically limits access to a device or area.\r\nC. Corrective\r\nA corrective control can actively work to mitigate any damage.\r\nD. Detective\r\nA detective control may not prevent access, but it can identify and record\r\nany intrusion attempts.\r\nE. Compensating\r\nA compensating security control doesn’t prevent an attack, but it does\r\nrestore from an attack using other means.\r\nF. Directive\r\nA directive control is relatively weak control which relies on security\r\ncompliance from the end users.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An internal audit has discovered four servers that have not been updated\r\nin over a year, and it will take two weeks to test and deploy the latest\r\npatches. Which of the following would be the best way to quickly\r\nrespond to this situation in the meantime?",
+      "options": [
+        "Purchase cybersecurity insurance",
+        "Implement an exception for all data center services",
+        "Move the servers to a protected segment",
+        "Hire a third-party to perform an extensive audit"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Move the servers to a protected segment\r\nSegmenting the servers to their own protected network would allow\r\nfor additional security controls while still maintaining the uptime and\r\navailability of the systems.\r\nThe incorrect answers:\r\nA. Purchase cybersecurity insurance\r\nCybersecurity insurance can help plan for financial issues during a\r\nsignificant attack, but it wouldn't provide any assistance for mitigating\r\npotential vulnerabilities during this two week period.\r\nB. Implement an exception for all data center services\r\nSecurity exceptions should be rare, and they should be very specific\r\nto a small number of systems. It would be risky to create a broad\r\nsecurity exception for systems which are not in-scope for the identified\r\nvulnerability.\r\nD. Hire a third-party to perform an extensive audit\r\nAudits take time, and hiring a third-party to perform an audit takes even\r\nlonger. By the time a third-party audit was underway, the problematic\r\nsystems would have already been tested and patched.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A business manager is documenting a set of steps for processing orders\r\nif the primary Internet connection fails. Which of these would BEST\r\ndescribe these steps?",
+      "options": [
+        "Platform diversity",
+        "Continuity of operations",
+        "Cold site recovery",
+        "Tabletop exercise"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Continuity of operations\r\nIt's always useful to have an alternative set of processes to handle any type\r\nof outage or issue. Continuity of operations planning ensures that the\r\nbusiness will continue to operate when these issues occur.\r\nThe incorrect answers:\r\nA. Platform diversity\r\nUsing different operating systems and platforms can help mitigate issues\r\nassociated with a single OS, but it wouldn't provide any mitigation if the\r\nprimary Internet connection was no longer available.\r\nC. Cold site recovery\r\nA cold site takes time to build, and the time and expense associated with\r\na disaster recovery switchover would be extensive. By the time a cold site\r\nwas enabled, the primary Internet connection may already be restored and\r\nmany alternative recovery options could have potentially been deployed.\r\nD. Tabletop exercise\r\nA tabletop exercise usually consists of a meeting where members of a\r\nrecovery team or disaster recovery talk through a disaster scenario.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company would like to examine the credentials of each individual\r\nentering the data center building. Which of the following would BEST\r\nfacilitate this requirement?",
+      "options": [
+        "Access control vestibule",
+        "Video surveillance",
+        "Pressure sensors",
+        "Bollards"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Access control vestibule\r\nAn access control vestibule is a room designed to restrict the flow of\r\nindividuals through an area. These are commonly used in high security\r\nareas where each person needs to be evaluated and approved before access\r\ncan be provided.\r\nThe incorrect answers:\r\nB. Video surveillance\r\nAlthough video surveillance can assist with monitoring access to a\r\nbuilding or room, it doesn't provide a way to validate the credentials of\r\neach visitor.\r\nC. Pressure sensors\r\nPressure sensors are commonly used on doors or windows to detect\r\nmovement in those devices. However, pressure sensors would not be used\r\nto check visitor credentials.\r\nD. Bollards\r\nBollards and barricades are often used on the exterior of a facility to\r\nprevent access to motorized vehicles and channel people through a specific\r\naccess location.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company stores some employee information in encrypted form, but\r\nother public details are stored as plaintext. Which of the following would\r\nBEST describe this encryption strategy?",
+      "options": [
+        "Full-disk",
+        "Record",
+        "Asymmetric",
+        "Key escrow"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Record\r\nRecord-level encryption is commonly used with databases to encrypt\r\nindividual columns within the database. This would store some\r\ninformation in the database as plaintext and other information as\r\nencrypted data.\r\nThe incorrect answers:\r\nA. Full-disk\r\nFull-disk encryption ensures that all data on a storage drive is protected.\r\nFull-disk encryption protects all data on the drive, and none of the\r\ninformation would remain as the original plaintext.\r\nC. Asymmetric\r\nAsymmetric encryption uses a public and private key pair to encrypt data.\r\nAsymmetric encryption does not store some information as plaintext and\r\nother information as encrypted data.\r\nD. Key escrow\r\nKey escrow describes the storage and management of decryption keys by\r\na third-party. Key escrow does not determine which data is selected for\r\nencryption or the method of encryption.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company would like to minimize database corruption if power is lost to\r\na server. Which of the following would be the BEST strategy to follow?",
+      "options": [
+        "Encryption",
+        "Off-site backups",
+        "Journaling",
+        "Replication"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Journaling\r\nJournaling writes data to a temporary journal before writing the\r\ninformation to the database. If power is lost, the system can recover the\r\nlast transaction from the journal when power is restored.\r\nThe incorrect answers:\r\nA. Encryption\r\nEncryption would provide confidentiality of the data, but it would not\r\nprovide any additional integrity features if power was lost.\r\nB. Off-site backups\r\nOff-site backups can be used to recover a corrupted database, but this does\r\nnot minimize or prevent database corruption from occurring.\r\nD. Replication\r\nReplication is used to create a duplicate copy of data. Although this\r\nprocess does provide a backup, it doesn't add any additional integrity and\r\ncould still potentially corrupt data if power is lost.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is creating a security policy for corporate mobile devices:\r\n• All mobile devices must be automatically locked after a predefined\r\ntime period.\r\n• The location of each device needs to be traceable.\r\n• All of the user’s information should be completely separate from\r\ncompany data.\r\nWhich of the following would be the BEST way to establish these\r\nsecurity policy rules?",
+      "options": [
+        "Segmentation",
+        "Biometrics",
+        "COPE",
+        "MDM"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. MDM\r\nAn MDM (Mobile Device Manager) provides a centralized management\r\nsystem for all mobile devices. From this central console, security\r\nadministrators can set policies for many different types of mobile devices.\r\nThe incorrect answers:\r\nA. Segmentation\r\nSegmentation describes the separation of user data from company data,\r\nbut the implementation all policies is managed by the MDM.\r\nB. Biometrics\r\nBiometrics can be used as another layer of device security, but you need\r\nmore than biometrics to implement the required security policies in this\r\nquestion.\r\nC. COPE\r\nA device that is COPE (Corporately Owned and Personally Enabled) is\r\ncommonly purchased by the corporation and allows the use of the mobile\r\ndevice for both business and personal use. The use of a COPE device does\r\nnot provide any policy management of the device.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security engineer runs a monthly vulnerability scan. The scan doesn’t\r\nlist any vulnerabilities for Windows servers, but a significant vulnerability\r\nwas announced last week and none of the servers are patched yet. Which\r\nof the following best describes this result?",
+      "options": [
+        "Exploit",
+        "Compensating controls",
+        "Zero-day attack",
+        "False negative"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. False negative\r\nA false negative is a result that fails to detect an issue when one\r\nactually exists.\r\nThe incorrect answers:\r\nA. Exploit\r\nAn exploit is an attack against a vulnerability. Vulnerability scans do not\r\ncommonly attempt to exploit the vulnerabilities that they identify.\r\nB. Compensating controls\r\nCompensating controls are used to mitigate a vulnerability when an\r\noptimal security response may not be available. For example, if a company\r\ncan't deploy a patch for a vulnerability, they can revoke or limit application\r\naccess until a patch is provided.\r\nC. Zero-day attack\r\nA zero-day attack focuses on previously unknown vulnerabilities. In this\r\nexample, the vulnerability scan isn’t an attack, and the vulnerabilities are\r\nalready known and patches are available.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An IT help desk is using automation to improve the response time for\r\nsecurity events. Which of the following use cases would apply to this\r\nprocess?",
+      "options": [
+        "Escalation",
+        "Guard rails",
+        "Continuous integration",
+        "Resource provisioning"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Escalation\r\nAutomation can recognize security events and escalate a security-related\r\nticket to the incident response team without any additional human\r\ninteraction.\r\nThe incorrect answers:\r\nB. Guard rails\r\nGuard rails are used by application developers to provide a set of\r\nautomated validations to user input and behavior. Guard rails are not used\r\nby the help desk team.\r\nC. Continuous integration\r\nContinuous integration and testing provides an automated method\r\nof constantly developing, testing, and deploying code. The continuous\r\nintegration process is not used by the help desk.\r\nD. Resource provisioning\r\nResource provisioning can be automated during the on-boarding and\r\noff-boarding process to quickly create or remove rights and permissions.\r\nResource provisioning is not commonly part of the automation associated\r\nwith security event notification.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A network administrator would like each user to authenticate with\r\ntheir corporate username and password when connecting to the\r\ncompany's wireless network. Which of the following should the network\r\nadministrator configure on the wireless access points?",
+      "options": [
+        "WPA3",
+        "802.1X",
+        "PSK",
+        "MFA"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. 802.1X\r\n802.1X uses a centralized authentication server, and this allows all users to\r\nuse their corporate credentials during the login process.\r\nThe incorrect answers:\r\nA. WPA3\r\nWPA3 (Wi-Fi Protected Access 3) is an encryption protocol for 802.11\r\nwireless networking. The WPA3 encryption itself does not include the\r\ncentralized authentication process described in this question.\r\nC. PSK\r\nPSK (Pre-Shared Key) is a wireless configuration option that allows\r\neveryone on the network to use the same access key or password when\r\nconnecting to the wireless network. This question requires each person to\r\nuse unique authentication credentials.\r\nD. MFA\r\nMFA (Multifactor Authentication) describes the use of multiple types\r\nof authentication checks. A username and password is a single factor\r\n(something you know), and the use of MFA does not itself require unique\r\nusername and password credentials for each user.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company's VPN service performs a posture assessment during the\r\nlogin process. Which of the following mitigation techniques would this\r\ndescribe?",
+      "options": [
+        "Encryption",
+        "Decommissioning",
+        "Least privilege",
+        "Configuration enforcement"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Configuration enforcement\r\nA posture assessment evaluates the configuration of a system to ensure\r\nall configurations and applications are up to date and secure as possible.\r\nIf a configuration does not meet these standards, the user is commonly\r\nprovided with options for resolving the issue before proceeding.\r\nThe incorrect answers:\r\nA. Encryption\r\nEncryption is an important part of a VPN (Virtual Private Network), but\r\nthe encryption of network data is not related to the posture assessment\r\nprocess.\r\nB. Decommissioning\r\nIt's important to properly manage data during any decommissioning\r\nprocess, but the decommissioning isn't part of the VPN login process.\r\nC. Least privilege\r\nLeast privilege describes the minimum rights and permissions that would\r\nallow an individual to perform their job function. Least privilege is not\r\npart of a posture assessment.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A user has assigned individual rights and permissions to a file on their\r\nnetwork drive. The user adds three additional individuals to have readonly\r\naccess to the file. Which of the following would describe this access\r\ncontrol model?",
+      "options": [
+        "Discretionary",
+        "Mandatory",
+        "Attribute-based",
+        "Role-based"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Discretionary\r\nDiscretionary access control is used in many operating systems, and this\r\nmodel allows the owner of the resource to control who has access.\r\nThe incorrect answers:\r\nB. Mandatory\r\nMandatory access control allows access based on the security level assigned\r\nto an object. Only users with the object’s assigned security level or higher\r\nmay access the resource.\r\nC. Attribute-based\r\nAttribute-based access control combines many different parameters to\r\ndetermine if a user has access to a resource.\r\nD. Role-based\r\nRole-based access control assigns rights and permissions based on the role\r\nof a user. These roles are usually assigned by group.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A remote user has received a text message with a link to login and\r\nconfirm their upcoming work schedule. Which of the following would\r\nBEST describe this attack?",
+      "options": [
+        "Brute force",
+        "Watering hole",
+        "Typosquatting",
+        "Smishing"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Smishing\r\nSmishing, or SMS (Short Message Service) phishing, is a social\r\nengineering attack that asks for sensitive information using SMS or\r\ntext messages.\r\nThe incorrect answers:\r\nA. Brute force\r\nA brute force attack tries multiple password combinations in an effort to\r\nidentify the correct authentication details.\r\nB. Watering hole\r\nA watering hole attack will infect a third-party site visited by the victim.\r\nWatering hole attacks are not commonly associated with received text\r\nmessages.\r\nC. Typosquatting\r\nTyposquatting uses a misspelling of a domain name to convince victims\r\nthey are visiting a legitimate website. The information provided in this\r\nquestion does not provide any specific domain names or links.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is formalizing the design and deployment process used by\r\ntheir application programmers. Which of the following policies would\r\napply?",
+      "options": [
+        "Business continuity",
+        "Acceptable use policy",
+        "Incident response",
+        "Development lifecycle"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Development lifecycle\r\nA formal software development lifecycle defines the specific policies\r\nassociated with the design, development, testing, deployment, and\r\nmaintenance of the application development process.\r\nThe incorrect answers:\r\nA. Business continuity\r\nBusiness continuity plans define the procedures used when the primary\r\nbusiness systems are unavailable. The business continuity process is not\r\ncommonly associated with the application development process.\r\nB. Acceptable use policy\r\nAn acceptable use policy formally defines the proper use of company assets\r\nand technology devices.\r\nC. Incident response\r\nIncident response policies define the procedures to follow when a security\r\nincident is identified. Incident response is not part of the application\r\ndevelopment process",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator has copied a suspected malware executable from\r\na user's computer and is running the program in a sandbox. Which of the\r\nfollowing would describe this part of the incident response process?",
+      "options": [
+        "Eradication",
+        "Preparation",
+        "Recovery",
+        "Containment"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Containment\r\nThe isolation and containment process prevents malware from spreading\r\nand allows the administrator to analyze the operation of the malware\r\nwithout putting any other devices at risk.\r\nThe incorrect answers:\r\nA. Eradication\r\nThe eradication phase is associated with completely removing malware\r\nfrom a system. This process usually involves removing all data from a\r\nsystem and installing or re-imaging with a known-good operating system.\r\nB. Preparation\r\nThe preparation process occurs before a security incident is discovered,\r\nand it can include the documentation of communication methods, the\r\ncompiling of mitigation software, or gathering network and application\r\ndocumentation.\r\nC. Recovery\r\nThe recovery phase is associated with the recovery of a system after\r\na security incident. Running malware in a sandbox is not part of the\r\nrecovery process.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A server administrator at a bank has noticed a decrease in the number\r\nof visitors to the bank's website. Additional research shows that users are\r\nbeing directed to a different IP address than the bank's web server. Which\r\nof the following would MOST likely describe this attack?",
+      "options": [
+        "Deauthentication",
+        "DDoS",
+        "Buffer overflow",
+        "DNS poisoning"
+      ],
+      "correct_answers": [
+        2,
+        3
+      ],
+      "explanation": "The Answer: D. DNS poisoning\r\nA DNS poisoning can modify a DNS server to modify the IP address\r\nprovided during the name resolution process. If an attacker modifies the\r\nDNS information, they can direct client computers to any destination IP\r\naddress.\r\nThe incorrect answers:\r\nA. Deauthentication\r\nDeauthentication attacks are commonly associated with wireless networks.\r\nThe deauthentication attack is used to remove devices from the wireless\r\nnetwork, and it does not commonly redirect clients to a different website.\r\nB. DDoS\r\nA DDoS (Distributed Denial of Service) is used by attackers to\r\ncause services to be unavailable. In this example, the bank's website is\r\noperational but clients are not resolving the correct IP address.\r\nC. Buffer overflow\r\nBuffer overflows are associated with application attacks and can cause\r\napplications to crash or act in unexpected ways. A buffer overflow would\r\nnot commonly redirect clients to a different website IP address.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following considerations are MOST commonly associated\r\nwith a hybrid cloud model?",
+      "options": [
+        "Microservice outages",
+        "IoT support",
+        "Network protection mismatches",
+        "Containerization backups"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Network protection mismatches\r\nA hybrid cloud includes more than one private or public cloud. This adds\r\nadditional complexity to the overall infrastructure, and it's common to\r\ninadvertently apply different authentication options and user permissions\r\nacross multiple cloud providers.\r\nThe incorrect answers:\r\nA. Microservice outages\r\nMicroservices are used to create a scalable and resilient application\r\ninstance. However, the availability of a microservice is not specific to a\r\nhybrid cloud model.\r\nB. IoT support\r\nIoT (Internet of Things) support is available in many cloud infrastructure\r\nmodels, and this would not be specific to a hybrid cloud.\r\nD. Containerization backups\r\nContainerization provides an efficient method of deploying application\r\ninstances, but the use and backup of these containers is not specific to a\r\nhybrid cloud infrastructure.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company hires a large number of seasonal employees, and their\r\nsystem access should normally be disabled when the employee leaves\r\nthe company. The security administrator would like to verify that their\r\nsystems cannot be accessed by any of the former employees. Which of the\r\nfollowing would be the BEST way to provide this verification?",
+      "options": [
+        "Confirm that no unauthorized accounts have administrator access",
+        "Validate the account lockout policy",
+        "Validate the offboarding processes and procedures",
+        "Create a report that shows all authentications for a 24-hour period"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Validate the offboarding processes and procedures\r\nThe disabling of an employee account is commonly part of the offboarding\r\nprocess. One way to validate an offboarding policy is to perform an audit\r\nof all accounts and compare active accounts with active employees.\r\nThe incorrect answers:\r\nA. Confirm that no unauthorized accounts have administrator access\r\nIt’s always a good idea to periodically audit administrator accounts, but\r\nthis audit won’t provide any validation that all former employee accounts\r\nhave been disabled.\r\nB. Validate the account lockout policy\r\nAccount lockouts occur when a number of invalid authentication attempts\r\nhave been made to a valid account. Disabled accounts would not be locked\r\nout because they are not currently valid accounts.\r\nD. Create a report that shows all authentications for a 24-hour period\r\nA list of all authentications would be quite large, and it would not be\r\nobvious to see which authentications were made with valid accounts",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following is used to describe how cautious an organization\r\nmight be to taking a specific risk?",
+      "options": [
+        "Risk appetite",
+        "Risk register",
+        "Risk transfer",
+        "Risk reporting"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Risk appetite\r\nA risk appetite is a broad description of how much risk-taking is deemed\r\nacceptable. An organization's risk appetite posture might be conservative,\r\nor they might be more expansionary and willing to take additional risks.\r\nThe incorrect answers:\r\nB. Risk register\r\nA risk register identifies and documents the risks associated with each\r\nstep of a project plan. A risk register is not designed to describe an\r\norganization's level of caution associated with each risk.\r\nC. Risk transfer\r\nSome organizations will transfer their risk to a third-party. For example,\r\nmany organizations will purchase cybersecurity insurance to minimize the\r\nfinancial impact of a cybersecurity event.\r\nD. Risk reporting\r\nRisk reporting is the formal process of identifying risk and documenting\r\nall details associated with the risk. These reports are commonly designed\r\nfor the decision making process by the senior management of an\r\norganization.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A technician is applying a series of patches to fifty web servers during a\r\nscheduled maintenance window. After patching and rebooting the first\r\nserver, the web service fails with a critical error. Which of the following\r\nshould the technician do NEXT?",
+      "options": [
+        "Contact the stakeholders regarding the outage",
+        "Follow the steps listed in the backout plan",
+        "Test the upgrade process in the lab",
+        "Evaluate the impact analysis associated with the change"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Follow the steps listed in the backout plan\r\nThe backout plan associated with the change control process provides\r\ninformation on reverting to the previous configuration if an unrecoverable\r\nerror is found during the change.\r\nThe incorrect answers:\r\nA. Contact the stakeholders regarding the outage\r\nThe stakeholders don't commonly require a detailed notification of every\r\nstep during the maintenance window. The final disposition of the change\r\ncan be communicated to the stakeholders after the maintenance window\r\nhas concluded.\r\nC. Test the upgrade process in the lab\r\nThe testing phase of the change control process takes place prior to the\r\nmaintenance window. Once the maintenance window has started, it's too\r\nlate to perform any additional tests in the lab.\r\nD. Evaluate the impact analysis associated with the change\r\nAn impact analysis determines the risk for making the proposed change.\r\nThis analysis is created prior to the change control approval, and it would\r\nnot be very useful when troubleshooting during the maintenance window.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An attacker has discovered a way to disable a server by sending specially\r\ncrafted packets from many remote devices to the operating system. When\r\nthe packet is received, the system crashes and must be rebooted to restore\r\nnormal operations. Which of the following would BEST describe this\r\nattack?",
+      "options": [
+        "Privilege escalation",
+        "SQL injection",
+        "Replay attack",
+        "DDoS"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. DDoS\r\nA DDoS (Distributed Denial of Service) is an attack that overwhelms or\r\ndisables a service to prevent the service from operating normally. Packets\r\nfrom multiple devices that disable a server would be an example of a\r\nDDoS attack.\r\nThe incorrect answers:\r\nA. Privilege escalation\r\nA privilege escalation attack allows a user to exceed their normal rights\r\nand permissions. In this example, user permission escalations were not\r\nrequired to perform this attack.\r\nB. SQL injection\r\nA SQL (Structured Query Language) injection is used to circumvent an\r\napplication and communicate directly to the application's database. In this\r\nquestion, there was no mention of application vulnerabilities or specific\r\nSQL statements.\r\nC. Replay attack\r\nA replay attack captures information and then replays that information\r\nas the method of attack. In this question, no mention was made of a prior\r\ndata capture.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A data breach has occurred in a large insurance company. A security\r\nadministrator is building new servers and security systems to get all of\r\nthe financial systems back online. Which part of the incident response\r\nprocess would BEST describe these actions?",
+      "options": [
+        "Lessons learned",
+        "Containment",
+        "Recovery",
+        "Analysis"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Recovery\r\nThe recovery after a breach can be a phased approach that may take\r\nmonths to complete.\r\nThe incorrect answers:\r\nA. Lessons learned\r\nOnce the event is over, it’s useful to revisit the process to learn and\r\nimprove for next time.\r\nB. Containment\r\nDuring an incident, it’s useful to separate infected systems from the rest of\r\nthe network.\r\nD. Analysis\r\nThe analysis phase can include the analysis of log files and alerts. These\r\ndata source can help warn of a potential attack or evidence an attack is\r\nunderway.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A network team has installed new access points to support an application\r\nlaunch. In less than 24 hours, the wireless network was attacked and\r\nprivate company information was accessed. Which of the following would\r\nbe the MOST likely reason for this breach?",
+      "options": [
+        "Race condition",
+        "Jailbreaking",
+        "Impersonation",
+        "Misconfiguration"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Misconfiguration\r\nThere are many different configuration options when installing an access\r\npoint, and it's likely one of those options allowed an attacker to gain access\r\nto the internal network.\r\nThe incorrect answers:\r\nA. Race condition\r\nA race condition occurs when two different application processes are\r\nexecuting simultaneously. If the two processes are not aware of each other,\r\nthe application may have unexpected results. In this example, there's no\r\nevidence the access points were experiencing a race condition.\r\nB. Jailbreaking\r\nJailbreaking replaces the firmware on a mobile device to gain access to\r\nfeatures not normally available in the operating system. Jailbreaking is not\r\ncommonly associated with wireless access points.\r\nC. Impersonation\r\nImpersonation is an attacker pretending to be someone or something they\r\nare not. In this example, there's no evidence that impersonation was used\r\nto breach the wireless network.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization has identified a significant vulnerability in an Internetfacing\r\nfirewall. The firewall company has stated the firewall is no\r\nlonger available for sale and there are no plans to create a patch for this\r\nvulnerability. Which of the following would BEST describe this issue?",
+      "options": [
+        "End-of-life",
+        "Improper input handling",
+        "Improper key management",
+        "Incompatible OS"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. End-of-life\r\nBecause the firewall is no longer available for sale, the firewall company\r\nhas decided to stop supporting and updating the device. A product no\r\nlonger supported by the manufacturer is consider to be end-of-life.\r\nThe incorrect answers:\r\nB. Improper input handling\r\nA best practice for application security is to provide the proper handling\r\nof invalid or unnecessary input. A missing patch for the firewall firmware\r\nwould not be related to input handling.\r\nC. Improper key management\r\nCryptographic keys can be used for many security purposes, but managing\r\nthose keys isn’t part of the patching process from a vendor.\r\nD. Incompatible OS\r\nThe operating system in the firewall would normally be supported by the\r\nmanufacturer, and the operating systems are not commonly modified on a\r\npurpose-built device such as a firewall.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company has decided to perform a disaster recovery exercise during an\r\nannual meeting with the IT directors and senior directors. A simulated\r\ndisaster will be presented, and the participants will discuss the logistics\r\nand processes required to resolve the disaster. Which of the following\r\nwould BEST describe this exercise?",
+      "options": [
+        "Capacity planning",
+        "Business impact analysis",
+        "Continuity of operations",
+        "Tabletop exercise"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Tabletop exercise\r\nA tabletop exercise allows a disaster recovery team to evaluate and plan\r\ndisaster recovery processes without performing a full-scale drill.\r\nThe incorrect answers:\r\nA. Capacity planning\r\nCapacity planning is used to determine how many resources would\r\nbe required for a particular task. A formal tabletop exercise would not\r\ncommonly include a capacity planning analysis.\r\nB. Business impact analysis\r\nA business impact analysis is usually created during the disaster recovery\r\nplanning process. Once the disaster has occurred, it becomes much more\r\ndifficult to complete an accurate impact analysis.\r\nC. Continuity of operations\r\nIf an outage occurs, it's common to have a backup plan to provide\r\ncontinuity of operations. This plan can be used for any significant outage\r\nand is not specific to disaster recovery testing.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator needs to block users from visiting websites\r\nhosting malicious software. Which of the following would be the BEST\r\nway to control this access?",
+      "options": [
+        "Honeynet",
+        "Data masking",
+        "DNS filtering",
+        "Data loss prevention"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. DNS filtering\r\nDNS filtering uses a database of known malicious websites to resolve an\r\nincorrect or null IP address. If a user attempts to visit a known malicious\r\nsite, the DNS resolution will fail and the user will not be able to visit the\r\nwebsite.\r\nThe incorrect answers:\r\nA. Honeynet\r\nA honeynet is a non-production network created to attract attackers. A\r\nhoneynet is not used to block traffic to known malicious Internet sites.\r\nB. Data masking\r\nData masking provides a way to hide data by substitution, shuffling,\r\nencryption, and other methods. Data masking does not provide a method\r\nof blocking communication to malicious websites.\r\nD. Data loss prevention\r\nData Loss Prevention (DLP) systems can identify and block private\r\ninformation from being transferred between systems. DLP does not\r\nprovide any direct method of blocking network traffic to known malware\r\nrepositories.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A system administrator has been called to a system with a malware\r\ninfection. As part of the incident response process, the administrator has\r\nimaged the operating system to a known-good version. Which of these\r\nincident response steps is the administrator following?",
+      "options": [
+        "Lessons learned",
+        "Recovery",
+        "Detection",
+        "Containment"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Recovery\r\nThe recovery phase describes the process of returning the system and data\r\nto the state prior to the malware infection. With a malware infection, this\r\noften requires deleting all data and reinstalling a known-good operating\r\nsystem.\r\nThe incorrect answers:\r\nA. Lessons learned\r\nA post-incident meeting can help the incident response participants\r\ndiscuss the phases of the incident that went well and which processes can\r\nbe improved for future events.\r\nC. Detection\r\nThe detection of the malware is an early phase in the incident response\r\nprocess. If the administrator is imaging a system, the malware was\r\npreviously detected and any critical documents were already recovered.\r\nD. Containment\r\nThe containment phase isolates the system from any other devices to\r\nprevent the spread of any malicious",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company has placed a SCADA system on a segmented network with\r\nlimited access from the rest of the corporate network. Which of the\r\nfollowing would describe this process?",
+      "options": [
+        "Load balancing",
+        "Least privilege",
+        "Data retention",
+        "Hardening"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Hardening\r\nThe hardening process for an industrial SCADA (Supervisory Control and\r\nData Acquisition) system might include network segmentation, additional\r\nfirewall controls, and the implementation of access control lists.\r\nThe incorrect answers:\r\nA. Load balancing\r\nA load balancer is used to distribute transactions across multiple systems.\r\nA single system was the only device referenced in this question, so a load\r\nbalancing option would not be available.\r\nB. Least privilege\r\nLeast privilege defines the minimum rights and permissions for\r\ncompleting a specific task. In this example, there was no mention of\r\nspecific tasks or their necessary permissions.\r\nC. Data retention\r\nData retention is important for long-term storage of important\r\ninformation. In this example, the mandated storage of data was not a\r\nconsideration.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An administrator is viewing the following security log:\r\n\r\nWhich of the following would describe this attack?",
+      "options": [
+        "Spraying",
+        "Downgrade",
+        "Brute force",
+        "DDoS"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Brute force\r\nA brute force attack discovers password by attempting a large combination\r\nof letters, numbers, and special characters until a match is found. In this\r\nexample, the notification of over four hundred attempts would qualify as a\r\nbrute force attack.\r\nThe incorrect answers:\r\nA. Spraying\r\nA spraying attack is similar to a brute force attack, but spraying limits the\r\nnumber of attempts to prevent alerts or an account lockout. A spraying\r\nattack often uses accounts passwords stolen from other sites or a short list\r\nof the most common passwords.\r\nB. Downgrade\r\nA downgrade attack is often used to force an insecure encryption\r\nalgorithm or the disabling of encryption entirely. In this example, no\r\nevidence of a downgrade attack is contained in the security log.\r\nD. DDoS\r\nA DDoS (Distributed Denial of Service) would involve many different\r\ndevices to cause a system outage. In this example, a single IP address was\r\nlogged and there was no evidence of a service outage.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "During a morning login process, a user's laptop was moved to a private\r\nVLAN and a series of updates were automatically installed. Which of the\r\nfollowing would describe this process?",
+      "options": [
+        "Account lockout",
+        "Configuration enforcement",
+        "Decommissioning",
+        "Sideloading"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Configuration enforcement\r\nMany organizations will perform a posture assessment during the login\r\nprocess to verify the proper security controls are in place. If the device does\r\nnot pass the assessment, the system can be quarantined and any missing\r\nsecurity updates can then be installed.\r\nThe incorrect answers:\r\nA. Account lockout\r\nIn this example, there were no errors or notifications regarding the account\r\nor authentication status.\r\nC. Decommissioning\r\nThe decommissioning process is often used to permanently remove devices\r\nfrom the network. In this example, the laptop mitigation would allow the\r\ndevice to return to the network once the updates were complete.\r\nD. Sideloading\r\nSideloading describes the installation of software on a mobile device\r\nthrough the use of third-party operating systems or websites.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following describes two-factor authentication?",
+      "options": [
+        "A printer uses a password and a PIN",
+        "The door to a building requires a fingerprint scan",
+        "An application requires a pseudo-random code",
+        "A Windows Domain requires a password and smart card"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. A Windows Domain requires a password and smart card\r\nThe multiple factors of authentication for this Windows Domain are a\r\npassword (something you know), and a smart card (something you have).\r\nThe incorrect answers:\r\nA. A printer uses a password and a PIN\r\nA password and a PIN (Personal Identification Number) are both\r\nsomething you know, so only one authentication factor is used.\r\nB. The door to a building requires a fingerprint scan\r\nA biometric scan (something you are) is a single factor of authentication.\r\nC. An application requires a pseudo-random code\r\nPseudo-random authentication codes are often provided using a hardware\r\ndongle or mobile app. This single factor of authentication is something you\r\nhave.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is deploying a new application to all employees in the field.\r\nSome of the problems associated with this roll out include:\r\n• The company does not have a way to manage the devices in the field\r\n• Team members have many different kinds of mobile devices\r\n• The same device needs to be used for both corporate and private use\r\nWhich of the following deployment models would address these\r\nconcerns?",
+      "options": [
+        "CYOD",
+        "SSO",
+        "COPE",
+        "BYOD"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. COPE\r\nA COPE (Corporate-owned, Personally Enabled) device would solve the\r\nissue of device standardization and would allow the device to be used for\r\nboth corporate access and personal use.\r\nThe incorrect answers:\r\nA. CYOD\r\nCYOD (Choose Your Own Device) allows the user to pick the make and\r\nmodel of their device. This would not solve the issue of different kinds of\r\nmobile devices used in the field.\r\nB. SSO\r\nSSO (Single Sign-On) is used to authenticate once when accessing\r\nmultiple resources. SSO would not resolve any of the listed issues.\r\nD. BYOD\r\nWith BYOD (Bring Your Own Device), the employee uses their personal\r\ndevice at work. This would not address the issue of mobile device\r\nmanagement or standardization of mobile devices.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization is installing a UPS for their new data center. Which of\r\nthe following would BEST describe this control type?",
+      "options": [
+        "Compensating",
+        "Directive",
+        "Deterrent",
+        "Detective"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Compensating\r\nA compensating security control doesn’t prevent an attack, but it does\r\nrestore from an attack using other means. In this example, the UPS\r\n(Uninterruptible Power Supply) does not stop a power outage, but it does\r\nprovide alternative power if an outage occurs.\r\nThe incorrect answers:\r\nB. Directive\r\nA directive control provides security controls using instructions and\r\nguidance. A UPS is not categorized as a directive control.\r\nC. Deterrent\r\nA deterrent control discourages an intrusion attempt. A UPS is used after\r\npower has been lost, so it would not be categorized as a deterrent.\r\nD. Detective\r\nA detective control may not prevent access, but it can identify and record\r\nintrusion attempts.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A manufacturing company would like to track the progress of parts used\r\non an assembly line. Which of the following technologies would be the\r\nBEST choice for this task?",
+      "options": [
+        "Secure enclave",
+        "Blockchain",
+        "Hashing",
+        "Asymmetric encryption"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Blockchain\r\nThe ledger functionality of a blockchain can be used to track or verify\r\ncomponents, digital media, votes, and other physical or digital objects.\r\nThe incorrect answers:\r\nA. Secure enclave\r\nA secure enclave is a protected area for secret information, and the secure\r\nenclave is often implemented as a hardware processor in a device.\r\nC. Hashing\r\nCryptographic hashes are commonly used to provide integrity\r\nverifications, but they don't necessarily include any method of tracking\r\ncomponents on an assembly line.\r\nD. Asymmetric encryption\r\nAsymmetric encryption uses different keys for encryption and decryption.\r\nAsymmetric encryption does not provide any method for tracking objects\r\non an assembly line.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company's website has been compromised and the website content has\r\nbeen replaced with a political message. Which of the following threat\r\nactors would be the MOST likely culprit?",
+      "options": [
+        "Insider",
+        "Organized crime",
+        "Shadow IT",
+        "Hacktivist"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Hacktivist\r\nA hacktivist is motivated by a particular philosophy, and their goal\r\nis to spread their message by defacing web sites and releasing private\r\ndocuments.\r\nThe incorrect answers:\r\nA. Insider\r\nAn insider has access to many company services, but the motivations of\r\nan insider threat would not commonly result in the posting of political\r\ninformation.\r\nB. Organized crime\r\nOrganized crime actors are motivated by money. It would be unusual for\r\nan organized crime hack to include the posting of political messages.\r\nC. Shadow IT\r\nA shadow IT group is mostly interested in building their own systems and\r\napplications, and they would not commonly deface a website in an attempt\r\nto spread a specific political message.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A Linux administrator is downloading an updated version of her Linux\r\ndistribution. The download site shows a link to the ISO and a SHA256\r\nhash value. Which of these would describe the use of this hash value?",
+      "options": [
+        "Verifies that the file was not corrupted during the file transfer",
+        "Provides a key for decrypting the ISO after download",
+        "Authenticates the site as an official ISO distribution site",
+        "Confirms that the file does not contain any malware"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Verifies that the file was not corrupted during\r\nthe file transfer\r\nOnce the file is downloaded, the administrator can calculate the file’s\r\nSHA256 hash and confirm that it matches the value on the website.\r\nThe incorrect answers:\r\nB. Provides a key for decrypting the ISO after download\r\nISO files containing public information are usually distributed without\r\nany encryption, and a hash value would not commonly be used as a\r\ndecryption key.\r\nC. Authenticates the site as an official ISO distribution site\r\nAlthough it’s important to download files from known good sites,\r\nproviding a hash value on a site would not provide any information about\r\nthe site’s authentication.\r\nD. Confirms that the file does not contain any malware\r\nA hash value doesn’t inherently provide any protection against malware.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company's security policy requires that login access should only\r\nbe available if a person is physically within the same building as the\r\nserver. Which of the following would be the BEST way to provide this\r\nrequirement?",
+      "options": [
+        "USB security key",
+        "Biometric scanner",
+        "PIN",
+        "SMS"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Biometric scanner\r\nA biometric scanner would require a person to be physically present to\r\nverify the authentication.\r\nThe incorrect answers:\r\nA. USB security key\r\nA security key can be used to store a certificate on a USB (Universal\r\nSerial Bus) drive. The security key is commonly used as an authentication\r\nmethod for a user or application, and it doesn't provide any information\r\nabout the location of the security key.\r\nC. PIN\r\nAlthough a PIN (Personal Identification Number) can be used as an\r\nauthentication factor, the use of the PIN does not guarantee that a person\r\nis physically present.\r\nD. SMS\r\nSMS (Short Message Service), or text messages, are commonly used as\r\nauthentication factors. However, the use of a mobile device to receive the\r\nSMS message does not guarantee that the owner of the mobile device is\r\nphysically present.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A development team has installed a new application and database to a\r\ncloud service. After running a vulnerability scanner on the application\r\ninstance, a security administrator finds the database is available for\r\nanyone to query without providing any authentication. Which of these\r\nvulnerabilities is MOST associated with this issue?",
+      "options": [
+        "Legacy software",
+        "Open permissions",
+        "Race condition",
+        "Malicious update"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Open permissions\r\nJust like local systems, proper permissions and security controls are\r\nrequired when applications are installed to a cloud-based system. If\r\npermissions are not properly configured, the application data may be\r\naccessible by anyone on the Internet.\r\nThe incorrect answers:\r\nA. Legacy software\r\nLegacy software often describes an older application with limited support\r\noptions. The application and database in this example is a new installation\r\nand would not normally be categorized as legacy.\r\nC. Race condition\r\nIf two processes occur simultaneously without coordination between\r\nthe processes, unexpected results could occur. In this example, a single\r\nvulnerability scan has identified the issue and other processes do not\r\nappear to be involved.\r\nD. Malicious update\r\nA malicious update involves the installation of unwanted software during\r\na normal update process. In this example, an update was not performed\r\nand the resulting public access would not generally be part of a malicious\r\nupdate.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Employees of an organization have received an email with a link offering\r\na cash bonus for completing an internal training course. Which of the\r\nfollowing would BEST describe this email?",
+      "options": [
+        "Watering hole attack",
+        "Cross-site scripting",
+        "Zero-day",
+        "Phishing campaign"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Phishing campaign\r\nA phishing campaign is an internal process used to test the security habits\r\nof the user community. An email with a link from a server not under the\r\ncontrol of the company could be an email sent by the IT department as\r\npart of a phishing campaign.\r\nThe incorrect answers:\r\nA. Watering hole attack\r\nA watering hole attack is used as an alternative to attacking a victim's\r\ndevice directly. With a watering hole attack, an attacker will compromise a\r\nsite used by the victim and will simply wait for the victim to visit.\r\nB. Cross-site scripting\r\nCross-site scripting takes advantage of the trust already existing in a\r\nweb browser. In this example, there's no evidence of a vulnerable web\r\napplication or a specific browser-based vulnerability.\r\nC. Zero-day\r\nA zero-day attack describes a vulnerability where a software patch or\r\nsimilar mitigation is not immediately available. A link in an email by itself\r\ndoes not describe a zero-day attack.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following risk management strategies would include the\r\npurchase and installation of an NGFW?",
+      "options": [
+        "Transfer",
+        "Mitigate",
+        "Accept",
+        "Avoid"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Mitigate\r\nMitigation is a strategy that decreases the threat level. This is commonly\r\ndone through the use of additional security systems and monitoring, such\r\nas an NGFW (Next-Generation Firewall).\r\nThe incorrect answers:\r\nA. Transfer\r\nTransferring risk would move the risk from one entity to another. Adding\r\nan NGFW would not transfer any risk to another party.\r\nC. Accept\r\nThe acceptance of risk is a position where the owner understands the risk\r\nand has decided to accept the potential results.\r\nD. Avoidance\r\nWith risk avoidance, the owner of the risk decides to stop participating in\r\na high-risk activity. This effectively avoids the risky activity and prevents\r\nany future issues.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization is implementing a security model where all application\r\nrequests must be validated at a policy enforcement point. Which of the\r\nfollowing would BEST describe this model?",
+      "options": [
+        "Public key infrastructure",
+        "Zero trust",
+        "Discretionary access control",
+        "Federation"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Zero trust\r\nZero trust describes a model where nothing is inherently trusted and\r\neverything must be verified to gain access. A central policy enforcement\r\npoint is commonly used to implement a zero trust architecture.\r\nThe incorrect answers:\r\nA. Public key infrastructure\r\nA public key infrastructure (PKI) uses public and private keys to provide\r\nconfidentiality and integrity. Asymmetric encryption and digital signatures\r\nare used as foundational technologies in PKI.\r\nC. Discretionary access control.\r\nDiscretionary access control is an authorization method where the owner\r\nof the data determines the scope and type of access. A discretionary\r\naccess control model does not specifically define how the authorization is\r\nimplemented.\r\nD. Federation\r\nFederation provides a way to manage authentication to a third-party\r\ndatabase. Federation does not describe the use of a policy enforcement\r\npoint.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is installing a new application in a public cloud. Which of\r\nthe following determines the assignment of data security in this cloud\r\ninfrastructure?",
+      "options": [
+        "Playbook",
+        "Audit committee",
+        "Responsibility matrix",
+        "Right-to-audit clause"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Responsibility matrix\r\nA cloud responsibility matrix is usually published by the provider to\r\ndocument the responsibilities for all cloud-based services. For example,\r\nthe customer responsibilities for an IaaS (Infrastructure as a Service)\r\nimplementation will be different than SaaS (Software as a Service).\r\nThe incorrect answers:\r\nA. Playbook\r\nA playbook provides conditional steps to follow when managing an\r\norganization's processes and procedures. For example, the process of\r\nrecovering from a virus infection would be documented in a playbook.\r\nB. Audit committee\r\nAn audit committee oversees the risk management activities for an\r\norganization. For example, the committee would be responsible for\r\nverifying the security implementation documented in the responsibility\r\nmatrix.\r\nD. Right-to-audit clause\r\nA right-to-audit clause is often included in a third-party contract to define\r\nthe terms and conditions around periodic audits. This is often part of a\r\nlarger product or services contract.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "When decommissioning a device, a company documents the type and\r\nsize of storage drive, the amount of RAM, and any installed adapter cards.\r\nWhich of the following describes this process?",
+      "options": [
+        "Destruction",
+        "Sanitization",
+        "Certification",
+        "Enumeration"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Enumeration\r\nEnumeration describes the detailed listing of all parts in a particular\r\ndevice. For a computer, this could include the CPU type, memory, storage\r\ndrive details, keyboard model, and more.\r\nThe incorrect answers:\r\nA. Destruction\r\nDestruction involves physically damaging a device or component to\r\nprevent any future use or data access. Although the company may choose\r\nto destroy these computers at a later date, this question does not describe\r\nthe destruction process.\r\nB. Sanitization\r\nSanitization deletes data from storage media and allows the storage device\r\nto be used in the future. For example, a sector-by-sector format would\r\nsanitize a hard drive and allow the drive to be installed into another\r\ncomputer without the concern of a data breach.\r\nC. Certification\r\nIf a third-party is providing destruction services, they often will certify the\r\nwork and document which device serial numbers were destroyed as part of\r\ntheir service.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An attacker has sent more information than expected in a single API\r\ncall, and this has allowed the execution of arbitrary code. Which of the\r\nfollowing would BEST describe this attack?",
+      "options": [
+        "Buffer overflow",
+        "Replay attack",
+        "Cross-site scripting",
+        "DDoS"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Buffer overflow\r\nThe results of a buffer overflow can cause random results, but sometimes\r\nthe actions can be repeatable and controlled. In the best possible case for\r\nthe hacker, a buffer overflow can be manipulated to execute code on the\r\nremote device.\r\nThe incorrect answers:\r\nB. Replay attack\r\nA replay attack does not require the sending of more information than\r\nexpected, and often a replay attack consists of normal traffic and expected\r\napplication input.\r\nC. Cross-site scripting\r\nA cross-site scripting attack allows a third party to take advantage of the\r\ntrust a browser might have with another website. This question involves an\r\nAPI call and does not appear to reference a browser or third-party website.\r\nD. DDoS\r\nA DDoS (Distributed Denial of Service) renders a service unavailable,\r\nand it involves the input of many devices to operate. A DDoS would not\r\nrequire sending more information than expected, and it rarely results in\r\nthe execution of arbitrary code.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company encourages users to encrypt all of their confidential materials\r\non a central server. The organization would like to enable key escrow as\r\na backup option. Which of these keys should the organization place into\r\nescrow?",
+      "options": [
+        "Private",
+        "CA",
+        "Session",
+        "Public"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Private\r\nWith asymmetric encryption, the private key is used to decrypt\r\ninformation that has been encrypted with the public key. To ensure\r\ncontinued access to the encrypted data, the company must have a copy of\r\neach private key.\r\nThe incorrect answers:\r\nB. CA\r\nA CA (Certificate Authority) key is commonly used to validate the digital\r\nsignature from a trusted CA. This is not commonly used for user data\r\nencryption.\r\nC. Session\r\nSession keys are commonly used temporarily to provide confidentiality\r\nduring a single session. Once the session is complete, the keys are\r\ndiscarded. Session keys are not used to provide long-term data encryption.\r\nD. Public\r\nIn asymmetric encryption, a public key is already available to everyone. It\r\nwould not be necessary to escrow a public key.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is in the process of configuring and enabling host-based\r\nfirewalls on all user devices. Which of the following threats is the\r\ncompany addressing?",
+      "options": [
+        "Default credentials",
+        "Vishing",
+        "Instant messaging",
+        "On-path"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Instant messaging\r\nInstant messaging is commonly used as an attack vector, and one way to\r\nhelp protect against malicious links delivered by instant messaging is a\r\nhost-based firewall.\r\nThe incorrect answers:\r\nA. Default credentials\r\nUsers commonly login with unique credentials that are specific to the user.\r\nA host-based firewall would not identify the use of a default username and\r\npassword.\r\nB. Vishing\r\nVishing, or voice phishing, occurs over a phone or other voice\r\ncommunication method. A host-based firewall would not be able to\r\nprotect against a voice-related attack vector.\r\nD. On-path\r\nA on-path attack describes a third-party in the middle of a\r\ncommunications path. The victims of an on-path attack are usually not\r\naware an attack is taking place, so a host-based firewall would not be able\r\nto detect an on-path attack.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A manufacturing company would like to use an existing router to separate\r\na corporate network from a manufacturing floor. Both networks use\r\nthe same physical switch, and the company does not want to install any\r\nadditional hardware. Which of the following would be the BEST choice\r\nfor this segmentation?",
+      "options": [
+        "Connect the corporate network and the manufacturing floor with a VPN",
+        "Build an air gapped manufacturing floor network",
+        "Use host-based firewalls on each device",
+        "Create separate VLANs for the corporate network and the manufacturing floor"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Create separate VLANs for the corporate network and\r\nthe manufacturing floor\r\nCreating VLANs (Virtual Local Area Networks) will segment a network\r\nwithout requiring additional switches.\r\nThe incorrect answers:\r\nA. Connect the corporate network and the manufacturing floor\r\nwith a VPN\r\nA VPN (Virtual Private Network) would encrypt all information between\r\nthe two networks, but it would not provide any segmentation. This process\r\nwould also commonly require additional hardware to provide VPN\r\nconnectivity.\r\nB. Build an air gapped manufacturing floor network\r\nAn air gapped network would require separate physical switches on each\r\nside of the gap, and this would require the purchase of an additional\r\nswitch.\r\nC. Use host-based firewalls on each device\r\nWhile personal firewalls provide protection for individual devices, they\r\ndo not segment networks. It’s also uncommon for personal firewalls to be\r\ninstalled on manufacturing equipment.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization needs to provide a remote access solution for a newly\r\ndeployed cloud-based application. This application is designed to be used\r\nby mobile field service technicians. Which of the following would be the\r\nbest option for this requirement?",
+      "options": [
+        "RTOS",
+        "CRL",
+        "Zero-trust",
+        "SASE"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. SASE\r\nA SASE (Secure Access Service Edge) solution is a next-generation VPN\r\ntechnology designed to optimize the process of secure communication to\r\ncloud services.\r\nThe incorrect answers:\r\nA. RTOS\r\nAn RTOS (Real-time Operating System) is an OS designed for industrial\r\nequipment, automobiles, and other time-sensitive applications.\r\nB. CRL\r\nA CRL (Certificate Revocation List) is used to determine if a certificate\r\nhas been administratively revoked. A CRL would not provide any remote\r\naccess functionality.\r\nC. Zero-trust\r\nZero-trust is a security strategy where all devices on the network are\r\nverified before connecting to another device. Zero-trust does not provide\r\nremote access functions.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is implementing a quarterly security awareness campaign.\r\nWhich of the following would MOST likely be part of this campaign?",
+      "options": [
+        "Suspicious message reports from users",
+        "An itemized statement of work",
+        "An IaC configuration file",
+        "An acceptable use policy document"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Suspicious message reports from users\r\nA security awareness campaign often involves automated phishing\r\nattempts, and most campaigns will include a process for users to report a\r\nsuspected phishing attempt to the IT security team.\r\nThe incorrect answers:\r\nB. An itemized statement of work\r\nA statement of work (SOW) is commonly used for service engagements.\r\nThe SOW provides a list of deliverables for the professional services, and\r\nthis list is often used to determine if the services were completed.\r\nC. An IaC configuration file\r\nAn IaC (Infrastructure as Code) configuration file describes an\r\ninfrastructure configuration commonly used by cloud-based systems. An\r\nIaC configuration file would not be used by a security awareness campaign.\r\nD. An acceptable use policy document\r\nAn acceptable use policy (AUP) is defined by an employer to describe the\r\nproper use of technology and systems within an organization. The AUP\r\nitself is not part of a security awareness campaign.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A recent report shows the return of a vulnerability that was previously\r\npatched four months ago. After researching this issue, the security team\r\nhas found a recent patch has reintroduced this vulnerability on the servers.\r\nWhich of the following should the security administrator implement to\r\nprevent this issue from occurring in the future?",
+      "options": [
+        "Containerization",
+        "Data masking",
+        "802.1X",
+        "Change management"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Change management\r\nThe change management process includes a testing phase that can help\r\nidentify potential issues relating to an application change or upgrade.\r\nThe incorrect answers:\r\nA. Containerization\r\nContainerization is an efficient method of deploying application instances,\r\nbut it doesn't provide any mitigation for security vulnerabilities.\r\nB. Data masking\r\nData masking can be used to limit access to sensitive data, but it does not\r\nprevent the implementation of a security vulnerability.\r\nC. 802.1X\r\n802.1X is a standard for port-based network access control, and it can\r\nhelp manage the authentication process of network users. 802.1X does not\r\nprovide any mitigation for security vulnerabilities",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security manager would like to ensure that unique hashes are used with\r\nan application login process. Which of the following would be the BEST\r\nway to add random data when generating a set of stored password hashes?",
+      "options": [
+        "Salting",
+        "Obfuscation",
+        "Key stretching",
+        "Digital signature"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Salting\r\nAdding random data, or salt, to a password when performing the hashing\r\nprocess will create a unique hash, even if other users have chosen the same\r\npassword.\r\nThe incorrect answers:\r\nB. Obfuscation\r\nObfuscation is the process of making something difficult for humans to\r\nread or understand. The obfuscation process isn't commonly associated\r\nwith adding random information to hashes.\r\nC. Key stretching\r\nKey stretching uses a cryptographic key multiple times for additional\r\nprotection against brute force attacks. Key stretching by itself does not\r\ncommonly add random data to the hashing process.\r\nD. Digital signature\r\nDigital signatures use a hash and asymmetric encryption to provide\r\nintegrity of data. Digital signatures aren't commonly used for storing\r\npasswords.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which cryptographic method is used to add trust to a digital certificate?",
+      "options": [
+        "Steganography",
+        "Hash",
+        "Symmetric encryption",
+        "Digital signature"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Digital signature\r\nA certificate authority will digitally sign a certificate to add trust. If you\r\ntrust the certificate authority, you can therefore trust the certificate.\r\nThe incorrect answers:\r\nA. Steganography\r\nSteganography is a technique for hiding information inside of another\r\nmedia type. Steganography is a method of obfuscating data and does not\r\nprovide a method of adding trust to a certificate.\r\nB. Hash\r\nA hash can help verify that the certificate has not been altered, but it does\r\nnot provide additional third-party trust.\r\nC. Symmetric encryption\r\nSymmetric encryption provides data confidentiality, but it doesn't add any\r\nadditional trust to the encryption process.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company is using SCAP as part of their security monitoring processes.\r\nWhich of the following would BEST describe this implementation?",
+      "options": [
+        "Train the user community to better identify phishing attempts",
+        "Present the results of an internal audit to the board",
+        "Automate the validation and patching of security issues",
+        "Identify and document authorized data center visitors"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Automate the validation and patching of security issues\r\nSCAP (Security Content Automation Protocol) focuses on the\r\nstandardization of vulnerability management across multiple security tools.\r\nThis allows different tools to identify and act on the same security criteria.\r\nThe incorrect answers:\r\nA. Train the user community to better identify phishing attempts\r\nSecurity awareness training is an important part of an overall security\r\nstrategy, but the training process does not generally involve SCAP.\r\nB. Present the results of an internal audit to the board\r\nA presentation of audit results can provide important feedback, but the\r\npresentation itself does not generally use SCAP.\r\nD. Identify and document authorized data center visitors\r\nThe identification and documentation process for visitors is an important\r\nsecurity policy, but it does not generally require the use of SCAP.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization maintains a large database of customer information for\r\nsales tracking and customer support. Which person in the organization\r\nwould be responsible for managing the access rights to this data?",
+      "options": [
+        "Data processor",
+        "Data owner",
+        "Data subject",
+        "Data custodian"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Data custodian\r\nThe data custodian manages access rights and sets security controls\r\nto the data.\r\nThe incorrect answers:\r\nA. Data processor\r\nThe data processor manages the operational use of the data, but not the\r\nrights and permissions to the information.\r\nB. Data owner\r\nThe data owner is usually a higher-level executive who makes business\r\ndecisions regarding the data.\r\nC. Data subject\r\nThe data subjects are the individuals who have their personal information\r\ncontained in this customer information database.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "An organization’s content management system currently labels files\r\nand documents as “Public” and “Restricted.” On a recent update, a new\r\nclassification type of “Private” was added. Which of the following would\r\nbe the MOST likely reason for this addition?",
+      "options": [
+        "Minimized attack surface",
+        "Simplified categorization",
+        "Expanded privacy compliance",
+        "Decreased search time"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Expanded privacy compliance\r\nThe labeling of data as private is often associated with compliance and\r\nconfidentiality concerns.\r\nThe incorrect answers:\r\nA. Minimized attack surface\r\nThe categorization of data has little impact on the size of the potential\r\nattack surface associated with a system.\r\nB. Simplified categorization\r\nAdding additional categories would not commonly be considered a\r\nsimplification.\r\nD. Decreased search time\r\nAdding additional classifications would not necessarily provide any\r\ndecreased search times.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A corporate security team would like to consolidate and protect the\r\nprivate keys across all of their web servers. Which of these would be the\r\nBEST way to securely store these keys?",
+      "options": [
+        "Integrate an HSM",
+        "Implement full disk encryption on the web servers",
+        "Use a TPM",
+        "Upgrade the web servers to use a UEFI BIOS"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Integrate an HSM\r\nAn HSM (Hardware Security Module) is a high-end cryptographic\r\nhardware appliance that can securely store keys and certificates for all\r\ndevices.\r\nThe incorrect answers:\r\nB. Implement full disk encryption on the web servers\r\nFull-disk encryption would only protect the keys if someone does not have\r\nthe proper credentials, and it won’t help consolidate all of the web server\r\nkeys to a central point.\r\nC. Use a TPM\r\nA TPM (Trusted Platform Module) is used on individual devices to\r\nprovide cryptographic functions and securely store encryption keys.\r\nIndividual TPMs would not provide any consolidation of web server\r\nprivate keys.\r\nD. Upgrade the web servers to use a UEFI BIOS\r\nA UEFI (Unified Extensible Firmware Interface) BIOS (Basic Input/\r\nOutput System) does not provide any additional security or consolidation\r\nfeatures for web server private keys.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security technician is reviewing this security log from an IPS:\r\n\r\nWhich of the following can be determined from this log information?\r\n(Select TWO)",
+      "options": [
+        "The alert was generated from a malformed User Agent header",
+        "The alert was generated from an embedded script",
+        "The attacker’s IP address is 222.43.112.74",
+        "The attacker’s IP address is 64.235.145.35",
+        "The alert was generated due to an invalid client port number"
+      ],
+      "correct_answers": [
+        1,
+        2
+      ],
+      "explanation": "The Answer: B. The alert was generated from an embedded script and\r\nC. The attacker’s IP address is 222.43.112.74\r\nThe details of the IPS (Intrusion Prevention System) alert show a script\r\nvalue embedded into JSON (JavaScript Object Notation) data. The IPS\r\nlog also shows the flow of the attack with an arrow in the middle. The\r\nattacker was IP address 222.43.112.74 with port 3332, and the victim was\r\n64.235.145.35 over port 80.\r\nThe incorrect answers:\r\nA. The alert was generated from a malformed User Agent header\r\nThe user agent information is provided as additional supporting data\r\nassociated with the alert. The agent itself is not the cause of this alert.\r\nD. The attacker’s IP address is 64.235.145.35\r\nThe attacker’s IP address is listed first, so the victim's IP address is\r\n64.235.145.35.\r\nE. The alert was generated due to an invalid client port number\r\nThe port number associated with the client, 3332, is a valid port number\r\nand not associated with the cause of the alert.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "Which of the following describes a monetary loss if one event occurs?",
+      "options": [
+        "ALE",
+        "SLE",
+        "RTO",
+        "ARO"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. SLE\r\nSLE (Single Loss Expectancy) describes the financial impact of\r\na single event.\r\nThe incorrect answers:\r\nA. ALE\r\nALE (Annual Loss Expectancy) is the financial loss over an entire\r\n12-month period.\r\nC. RTO\r\nRTO (Recovery Time Objectives) define a timeframe needed to restore a\r\nparticular service level.\r\nD. ARO\r\nThe ARO (Annualized Rate of Occurrence) is the number of times an\r\nevent will occur in a 12-month period.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A user with restricted access has typed this text in a search field of an\r\ninternal web-based application:\r\n\r\nAfter submitting this search request, all database records are displayed on\r\nthe screen. Which of the following would BEST describe this search?",
+      "options": [
+        "Cross-site scripting",
+        "Buffer overflow",
+        "SQL injection",
+        "SSL stripping"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. SQL injection\r\nSQL (Structured Query Language) injection takes advantage of poor\r\ninput validation to circumvent the application and allows the attacker to\r\nquery the database directly.\r\nThe incorrect answers:\r\nA. Cross-site scripting\r\nCross-site scripting takes advantage of a third-party trust to a web\r\napplication. The attack demonstrated in this question does not use another\r\nuser's credentials or access rights to obtain information.\r\nB. Buffer overflow\r\nA buffer overflow uses an application vulnerability to submit more\r\ninformation than an application can properly manage. The attack syntax\r\nin this question is specific to SQL injections, and it does not appear to be\r\nmanipulating a buffer overflow vulnerability.\r\nD. SSL stripping\r\nSSL stripping is a downgrade attack that modifies web site addresses to\r\nallow access to encrypted information. The attack in this question does not\r\nappear to include a third-party.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A user has opened a helpdesk ticket complaining of poor system\r\nperformance, excessive pop up messages, and the cursor moving\r\nwithout anyone touching the mouse. This issue began after they opened\r\na spreadsheet from a vendor containing part numbers and pricing\r\ninformation. Which of the following is MOST likely the cause of this\r\nuser's issues?",
+      "options": [
+        "On-path",
+        "Worm",
+        "Trojan horse",
+        "Logic bomb"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Trojan horse\r\nSince a Trojan horse is usually disguised as legitimate software, the\r\nvictim often doesn’t realize they’re installing malware. Once the Trojan is\r\ninstalled, the attacker can install additional software to control the infected\r\nsystem.\r\nThe incorrect answers:\r\nA. On-path\r\nAn on-path attack commonly occurs without any knowledge to the parties\r\ninvolved, and there’s usually no additional notification that an attack is\r\nunderway.\r\nB. Worm\r\nA worm is malware that can replicate itself between systems without any\r\nuser intervention, so a spreadsheet that requires additional a user to click\r\nwarning messages would not be categorized as a worm.\r\nD. Logic bomb\r\nA logic bomb is malware that installs and operates silently until a certain\r\nevent occurs. Once the logic bomb has been triggered, the results usually\r\ninvolve loss of data or a disabled operating system.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A web-based manufacturing company processes monthly charges to credit\r\ncard information saved in the customer's profile. All of the customer\r\ninformation is encrypted and protected with additional authentication\r\nfactors. Which of the following would be the justification for these\r\nsecurity controls?",
+      "options": [
+        "Chain of custody",
+        "Password vaulting",
+        "Compliance reporting",
+        "Sandboxing"
+      ],
+      "correct_answers": [
+        2
+      ],
+      "explanation": "The Answer: C. Compliance reporting\r\nThe storage of sensitive information such as customer details and payment\r\ninformation may require additional reporting to ensure compliance with\r\nthe proper security controls.\r\nThe incorrect answers:\r\nA. Chain of custody\r\nChain of custody describes the control and integrity of collected evidence.\r\nChain of custody would not involve the implementation of encryption and\r\nauthentication factors in this example.\r\nB. Password vaulting\r\nPassword vaults are used as secure storage and retrieval of authentication\r\ncredentials. The protection of user data is not associated with password\r\nvaulting.\r\nD. Sandboxing\r\nSandboxing is the process of running a service or system in a protected\r\nenvironment. This sandbox allows for testing and analysis without affecting\r\nother systems that may currently be in production.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security manager has created a report showing intermittent network\r\ncommunication from certain workstations on the internal network to one\r\nexternal IP address. These traffic patterns occur at random times during\r\nthe day. Which of the following would be the MOST likely reason for\r\nthese traffic patterns?",
+      "options": [
+        "On-path attack",
+        "Keylogger",
+        "Replay attack",
+        "Brute force"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. Keylogger\r\nA keylogger captures keystrokes and occasionally transmits this\r\ninformation to the attacker for analysis. The traffic patterns identified\r\nby the security manager could potentially be categorized as malicious\r\nkeylogger transfers.\r\nThe incorrect answers:\r\nA. On-path attack\r\nAn on-path attack is an exploit often associated with a device monitoring\r\ndata in the middle of a conversation. This question did not provide any\r\nevidence of third-party monitoring.\r\nC. Replay attack\r\nA replay attack is often used by an attacker to gain access to a service\r\nthrough the use of credentials gathered from a previous authentication.\r\nInternal devices communicating to an external server would not be a\r\ncommon pattern for a replay attack.\r\nD. Brute force\r\nA brute force attack attempts to find authentication credentials by\r\nattempting to guess a password. In this example, the source of the traffic\r\nand the traffic patterns don't match those seen with common brute force\r\nattempts.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "The security policies in a manufacturing company prohibit the\r\ntransmission of customer information. However, a security administrator\r\nhas received an alert that credit card numbers were transmitted as an\r\nemail attachment. Which of the following was the MOST likely source\r\nof this alert message?",
+      "options": [
+        "IPS",
+        "DLP",
+        "RADIUS",
+        "IPsec"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. DLP\r\nDLP (Data Loss Prevention) technologies can identify and block the\r\ntransmission of sensitive data across the network.\r\nThe incorrect answers:\r\nA. IPS\r\nIPS (Intrusion Prevention System) signatures are useful for identifying\r\nknown vulnerabilities, but they don't commonly provide a way to identify\r\nand block PII (Personally Identifiable Information) or sensitive data.\r\nC. RADIUS\r\nRADIUS (Remote Authentication Dial-In User Service) is an\r\nauthentication protocol commonly used to validate user credentials.\r\nRADIUS would not be used to identify sensitive data transfers.\r\nD. IPsec\r\nIPsec (Internet Protocol Security) is a protocol suite for authenticating\r\nand encrypting network communication. IPsec does not include any\r\nfeatures for identifying and alerting on sensitive information.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator has configured a virtual machine in a screened\r\nsubnet with a guest login account and no password. Which of the\r\nfollowing would be the MOST likely reason for this configuration?",
+      "options": [
+        "The server is a honeypot for attracting potential attackers",
+        "The server is a cloud storage service for remote users",
+        "The server will be used as a VPN concentrator",
+        "The server is a development sandbox for third-party programming projects"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. The server is a honeypot for attracting potential attackers\r\nA screened subnet is a good location to configure services that can be\r\naccessed from the Internet, and building a system that can be easily\r\ncompromised is a common tactic for honeypot systems.\r\nThe incorrect answers:\r\nB. The server is a cloud storage service for remote users\r\nAlthough cloud storage is a useful service, configuring storage on a server\r\nwith an open guest account is not a best practice.\r\nC. The server will be used as a VPN concentrator\r\nVPN (Virtual Private Networking) concentrators should be installed\r\non secure devices, and configuring an open guest account would not be\r\nconsidered a secure configuration.\r\nD. The server is a development sandbox for third-party\r\nprogramming projects\r\nIt would not be secure to configure a development sandbox on a system\r\nwith an open guest account.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A security administrator is configuring a DNS server with a SPF record.\r\nWhich of the following would be the reason for this configuration?",
+      "options": [
+        "Transmit all outgoing email over an encrypted tunnel",
+        "List all servers authorized to send emails",
+        "Digitally sign all outgoing email messages",
+        "Obtain disposition instructions for emails marked as spam"
+      ],
+      "correct_answers": [
+        1
+      ],
+      "explanation": "The Answer: B. List all servers authorized to send emails\r\nSPF (Sender Policy Framework) is used to publish a list of all authorized\r\nemail servers for a specific domain.\r\nThe incorrect answers:\r\nA. Transmit all outgoing email over an encrypted tunnel\r\nThe option to use encrypted protocols for email transfer is configured in\r\nthe email server and not in the DNS (Domain Name System) server.\r\nC. Digitally sign all outgoing email messages\r\nDKIM (Domain Keys Identified Mail) is used to publish the public key\r\nused for the digital signature for all outgoing email.\r\nD. Obtain disposition instructions for emails marked as spam\r\nA DMARC (Domain-based Message Authentication, Reporting, and\r\nConformance) record announces the preferred email disposition if a\r\nmessage is identified as spam. DMARC options include accepting the\r\nmessages, sending them to a spam folder, or simply rejecting the emails.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company would like to securely deploy applications without the\r\noverhead of installing a virtual machine for each system. Which of the\r\nfollowing would be the BEST way to deploy these applications?",
+      "options": [
+        "Containerization",
+        "IoT",
+        "Proxy",
+        "RTOS"
+      ],
+      "correct_answers": [
+        0
+      ],
+      "explanation": "The Answer: A. Containerization\r\nApplication containerization uses a single virtual machine to use as a\r\nfoundation for separate application \"containers.\" These containers are\r\nimplemented as isolated instances, and an application in one container is\r\nnot inherently accessible from other containers on the system.\r\nThe incorrect answers:\r\nB. IoT\r\nIoT (Internet of Things) is a broad category of embedded devices often\r\ninstalled in our homes and businesses. IoT devices are not commonly\r\nassociated with the application deployment process.\r\nC. Proxy\r\nProxies can be used as security devices, but they aren't commonly used for\r\ndeploying application instances.\r\nD. RTOS\r\nRTOS (Real-Time Operating Systems) are designed for time-sensitive\r\napplications and services. Manufacturing equipment and transportation\r\nsystems often incorporate an RTOS.",
+      "category": "",
+      "is_marked": false
+    },
+    {
+      "question_text": "A company has just purchased a new application server, and the security\r\ndirector wants to determine if the system is secure. The system is currently\r\ninstalled in a test environment and will not be available to users until the\r\nroll out to production next week. Which of the following would be the\r\nBEST way to determine if any part of the system can be exploited?",
+      "options": [
+        "Tabletop exercise",
+        "Vulnerability scanner",
+        "DDoS",
+        "Penetration test"
+      ],
+      "correct_answers": [
+        3
+      ],
+      "explanation": "The Answer: D. Penetration test\r\nA penetration test can be used to actively exploit potential vulnerabilities\r\nin a system or application. This could cause a denial of service or loss of\r\ndata, so the best practice is to perform the penetration test during nonproduction\r\nhours or in a test environment.\r\nThe incorrect answers:\r\nA. Tabletop exercise\r\nA tabletop exercise is used to talk through a security event with an\r\nincident response team around a conference room table. This is commonly\r\nperformed as a training device instead of performing a full-scale disaster\r\ndrill.\r\nB. Vulnerability scanner\r\nVulnerability scanners may identify a vulnerability, but they do not actively\r\nattempt to exploit the vulnerability.\r\nC. DDoS\r\nA DDoS (Distributed Denial of Service) attack is often used to disable\r\na service or application, but it doesn't provide any particular information\r\nregarding an application vulnerability.",
+      "category": "",
+      "is_marked": false
+    }
+  ]
+}

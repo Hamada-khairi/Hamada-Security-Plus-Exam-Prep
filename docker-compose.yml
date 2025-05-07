@@ -2,7 +2,7 @@ version: '3.9'
 services:
   web:
     build: .
-    container_name: security_plus_web
+    container_name: hamda_security_plus_web
     ports:
       - "5000:5000"
     volumes:

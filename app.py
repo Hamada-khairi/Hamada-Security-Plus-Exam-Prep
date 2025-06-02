@@ -499,6 +499,20 @@ def exam_results(exam_id):
     
     return render_template('exam_results.html', exam=exam)
 
+@app.route('/delete-exam-results', methods=['POST'])
+@login_required
+def delete_exam_results():
+    try:
+        # Delete all exam history for the current user
+        ExamHistory.query.filter_by(user_id=current_user.id).delete()
+        db.session.commit()
+        flash('All exam results have been deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('An error occurred while deleting exam results.', 'error')
+    
+    return redirect(url_for('exam_analytics'))
+
 @app.route('/view-exam-results/<int:exam_id>')
 @login_required
 def view_exam_results(exam_id):

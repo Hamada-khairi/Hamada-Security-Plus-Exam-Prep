@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Add toast container at the top of the content -->
+<div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
         <div class="bg-gray-800 rounded-lg shadow-lg p-6">
@@ -11,10 +14,12 @@
                 </button>
             </div>
 
-            <form action="{{ url_for('update_question', question_id=question.id) if question else url_for('add_question') }}" 
+            <form id="questionForm" 
+                  action="{{ url_for('update_question', question_id=question.id) if question else url_for('add_question') }}" 
                   method="POST" 
                   enctype="multipart/form-data"
-                  class="space-y-6">
+                  class="space-y-6"
+                  onsubmit="return validateForm(event)">
                 <input type="hidden" name="return_to_exam" value="{{ request.args.get('return_to_exam', '') }}">
                 <input type="hidden" name="exam_index" value="{{ request.args.get('index', '') }}">
                 
@@ -39,45 +44,45 @@
                              alt="Current question image" 
                              class="max-w-full h-auto rounded-lg border-2 border-gray-600">
                         <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
-                            <label class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="fas fa-camera mr-2"></i>Change Image
-                                <input type="file" name="image" accept="image/*" class="hidden" onchange="previewImage(event)">
-                            </label>
                             <button type="button" 
-                                    onclick="toggleRemoveImage()" 
-                                    class="ml-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                                    onclick="removeImage()" 
+                                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
                                 <i class="fas fa-trash mr-2"></i>Remove
                             </button>
                         </div>
                     </div>
-                    <div id="remove-image-toggle" class="hidden">
-                        <label class="flex items-center text-sm text-gray-400">
-                            <input type="checkbox" name="remove_image" class="mr-2" id="remove-image-checkbox">
-                            Remove current image
-                        </label>
-                    </div>
+                    <input type="hidden" name="remove_image" id="remove-image-checkbox">
                     {% endif %}
                     
                     <!-- New Image Upload -->
                     <div id="image-upload-container" class="{% if question and question.image_url %}hidden{% endif %}">
                         <div class="flex items-center justify-center w-full">
-                            <label class="w-full flex flex-col items-center px-4 py-6 bg-gray-700 text-gray-400 rounded-lg tracking-wide border-2 border-gray-600 border-dashed cursor-pointer hover:bg-gray-600 transition-all">
-                                <i class="fas fa-cloud-upload-alt text-3xl mb-2"></i>
-                                <span class="text-sm">Click to upload an image</span>
+                            <div class="w-full flex flex-col items-center px-4 py-6 bg-gray-700 text-gray-400 rounded-lg tracking-wide border-2 border-gray-600 border-dashed cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out relative"
+                                 id="dropzone"
+                                 ondrop="handleDrop(event)"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)"
+                                 onclick="document.querySelector('#image-upload-container input[type=file]').click()">
+                                <div class="upload-content flex flex-col items-center transition-all duration-300 ease-in-out">
+                                    <i class="fas fa-cloud-upload-alt text-3xl mb-2 transform transition-transform duration-300 hover:scale-110"></i>
+                                    <span class="text-sm">Drag and drop an image here or click to upload</span>
                                 <span class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF up to 5MB</span>
+                                </div>
+                                <label class="hidden">
                                 <input type="file" name="image" accept="image/*" class="hidden" onchange="previewImage(event)">
                             </label>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Image Preview -->
                     <div id="image-preview" class="hidden">
                         <div class="relative group">
-                            <img id="preview" src="" alt="Image preview" class="max-w-full h-auto rounded-lg border-2 border-gray-600">
-                            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+                            <img id="preview" src="" alt="Image preview" class="max-w-full h-auto rounded-lg border-2 border-gray-600 transition-all duration-300 ease-in-out">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
                                 <button type="button" 
                                         onclick="removePreview()" 
-                                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
                                     <i class="fas fa-times mr-2"></i>Remove
                                 </button>
                             </div>
@@ -85,27 +90,35 @@
                     </div>
                 </div>
 
-                <!-- Options -->
-                <div id="options-container" class="space-y-4">
+                <!-- Options Section with Validation Message -->
+                <div id="options-section" class="space-y-4">
+                    <div class="flex justify-between items-center">
                     <label class="block text-sm font-medium mb-1">Options</label>
+                        <div id="validation-message" class="hidden text-red-500 text-sm">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <span>Please select at least one correct answer</span>
+                        </div>
+                    </div>
+                    <div id="options-container" class="space-y-4 relative">
                     {% if question %}
                         {% for option in question.options %}
-                        <div class="flex items-start space-x-2">
+                            <div class="flex items-start space-x-2 option-group">
                             <div class="flex-1">
                                 <input type="text" 
                                        name="options[]" 
                                        value="{{ option }}"
                                        required
                                        placeholder="Option {{ loop.index }}"
-                                       class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                                           class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary option-input">
                             </div>
-                            <label class="flex items-center">
+                                <label class="flex items-center answer-checkbox-label">
                                 <input type="checkbox" 
                                        name="correct_answers[]" 
                                        value="{{ loop.index0 }}"
                                        {% if loop.index0 in question.correct_answers %}checked{% endif %}
-                                       class="mr-2">
-                                Correct
+                                           class="mr-2 answer-checkbox"
+                                           onchange="validateAnswerSelection()">
+                                    <span class="whitespace-nowrap">Correct</span>
                             </label>
                             {% if loop.index > 4 %}
                             <button type="button" 
@@ -118,20 +131,21 @@
                         {% endfor %}
                     {% else %}
                         {% for _ in range(4) %}
-                        <div class="flex items-start space-x-2">
+                            <div class="flex items-start space-x-2 option-group">
                             <div class="flex-1">
                                 <input type="text" 
                                        name="options[]" 
                                        required
                                        placeholder="Option {{ loop.index }}"
-                                       class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                                           class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary option-input">
                             </div>
-                            <label class="flex items-center">
+                                <label class="flex items-center answer-checkbox-label">
                                 <input type="checkbox" 
                                        name="correct_answers[]" 
                                        value="{{ loop.index0 }}"
-                                       class="mr-2">
-                                Correct
+                                           class="mr-2 answer-checkbox"
+                                           onchange="validateAnswerSelection()">
+                                    <span class="whitespace-nowrap">Correct</span>
                             </label>
                             {% if loop.index > 4 %}
                             <button type="button" 
@@ -143,6 +157,7 @@
                         </div>
                         {% endfor %}
                     {% endif %}
+                    </div>
                 </div>
 
                 <button type="button" 
@@ -176,11 +191,24 @@
                     </datalist>
                 </div>
 
-                <!-- Submit Button -->
+                <!-- Submit Button Section with Error Message -->
+                <div class="space-y-4">
+                    <div id="form-error-message" class="hidden bg-red-500 text-white p-4 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-exclamation-circle mt-1 mr-2"></i>
+                            <div>
+                                <p class="font-bold">Please fix the following issues:</p>
+                                <ul class="list-disc list-inside mt-1" id="error-list"></ul>
+                            </div>
+                        </div>
+                    </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                        <button type="submit" 
+                                id="submit-button"
+                                class="bg-primary hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
                         {{ 'Save Changes' if question else 'Add Question' }}
                     </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -190,24 +218,25 @@
 <script>
 function addOption() {
     const container = document.getElementById('options-container');
-    const optionCount = container.children.length - 1; // Subtract 1 for the label
+    const optionCount = container.children.length;
     
     const div = document.createElement('div');
-    div.className = 'flex items-start space-x-2';
+    div.className = 'flex items-start space-x-2 option-group';
     div.innerHTML = `
         <div class="flex-1">
             <input type="text" 
                    name="options[]" 
                    required
                    placeholder="Option ${optionCount + 1}"
-                   class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
+                   class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary option-input">
         </div>
-        <label class="flex items-center">
+        <label class="flex items-center answer-checkbox-label">
             <input type="checkbox" 
                    name="correct_answers[]" 
                    value="${optionCount}"
-                   class="mr-2">
-            Correct
+                   class="mr-2 answer-checkbox"
+                   onchange="validateAnswerSelection()">
+            <span class="whitespace-nowrap">Correct</span>
         </label>
         <button type="button" 
                 onclick="removeOption(this)" 
@@ -217,10 +246,163 @@ function addOption() {
     `;
     
     container.appendChild(div);
+    validateAnswerSelection();
 }
 
 function removeOption(button) {
-    button.closest('.flex').remove();
+    button.closest('.option-group').remove();
+    updateOptionValues();
+    validateAnswerSelection();
+}
+
+function updateOptionValues() {
+    const options = document.querySelectorAll('.option-group');
+    options.forEach((option, index) => {
+        const checkbox = option.querySelector('input[type="checkbox"]');
+        checkbox.value = index;
+    });
+}
+
+function validateAnswerSelection() {
+    const correctAnswers = document.querySelectorAll('.answer-checkbox:checked');
+    const validationMessage = document.getElementById('validation-message');
+    const optionsSection = document.getElementById('options-section');
+    
+    if (correctAnswers.length === 0) {
+        optionsSection.classList.add('has-error');
+        document.querySelectorAll('.answer-checkbox-label').forEach(label => {
+            label.classList.add('text-red-500');
+        });
+    } else {
+        validationMessage.classList.add('hidden');
+        optionsSection.classList.remove('has-error');
+        document.querySelectorAll('.answer-checkbox-label').forEach(label => {
+            label.classList.remove('text-red-500');
+        });
+    }
+    return correctAnswers.length > 0;
+}
+
+function validateForm(event) {
+    event.preventDefault();
+    const errors = [];
+    const errorList = document.getElementById('error-list');
+    const formErrorMessage = document.getElementById('form-error-message');
+    
+    // Clear previous errors
+    errorList.innerHTML = '';
+    formErrorMessage.classList.add('hidden');
+    
+    // Validate question text
+    const questionText = document.getElementById('question_text');
+    if (!questionText.value.trim()) {
+        errors.push('Question text is required');
+        questionText.classList.add('border-red-500');
+    } else {
+        questionText.classList.remove('border-red-500');
+    }
+    
+    // Validate options
+    const options = document.querySelectorAll('.option-input');
+    let emptyOptions = false;
+    options.forEach(option => {
+        if (!option.value.trim()) {
+            emptyOptions = true;
+            option.classList.add('border-red-500');
+        } else {
+            option.classList.remove('border-red-500');
+        }
+    });
+    if (emptyOptions) {
+        errors.push('All option fields must be filled');
+    }
+    
+    // Validate correct answer selection
+    const validationMessage = document.getElementById('validation-message');
+    if (!validateAnswerSelection()) {
+        validationMessage.classList.remove('hidden');
+        return false;
+    }
+    
+    if (errors.length > 0) {
+        // Show errors
+        formErrorMessage.classList.remove('hidden');
+        errors.forEach(error => {
+            const li = document.createElement('li');
+            li.textContent = error;
+            errorList.appendChild(li);
+        });
+        
+        // Scroll to the first error or the error message
+        const firstError = document.querySelector('.border-red-500, .has-error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        return false;
+    }
+    
+    // If validation passes, submit the form
+    document.getElementById('questionForm').submit();
+    return true;
+}
+
+// Add validation on input changes
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('questionForm');
+    const inputs = form.querySelectorAll('input[type="text"], textarea');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('border-red-500');
+            }
+        });
+    });
+    
+    // Initial validation check
+    validateAnswerSelection();
+});
+
+function handleDragOver(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const dropzone = document.getElementById('dropzone');
+    dropzone.classList.add('bg-gray-600', 'border-blue-500');
+    dropzone.querySelector('.upload-content').classList.add('scale-105');
+}
+
+function handleDragLeave(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const dropzone = document.getElementById('dropzone');
+    dropzone.classList.remove('bg-gray-600', 'border-blue-500');
+    dropzone.querySelector('.upload-content').classList.remove('scale-105');
+}
+
+function handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const dropzone = document.getElementById('dropzone');
+    dropzone.classList.remove('bg-gray-600', 'border-blue-500');
+    dropzone.querySelector('.upload-content').classList.remove('scale-105');
+    
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+        const file = files[0];
+        if (file.type.startsWith('image/')) {
+            const input = document.querySelector('input[type="file"]');
+            input.files = files;
+            previewImage({ target: input });
+        } else {
+            // Show error animation
+            dropzone.classList.add('animate-shake', 'border-red-500');
+            setTimeout(() => {
+                dropzone.classList.remove('animate-shake', 'border-red-500');
+            }, 800);
+        }
+    }
 }
 
 function previewImage(event) {
@@ -232,6 +414,7 @@ function previewImage(event) {
     if (file) {
         preview.src = URL.createObjectURL(file);
         previewContainer.classList.remove('hidden');
+        previewContainer.classList.add('animate-fade-in');
         uploadContainer.classList.add('hidden');
         
         // If there's a remove image checkbox, uncheck it
@@ -248,20 +431,137 @@ function removePreview() {
     const uploadContainer = document.getElementById('image-upload-container');
     const fileInput = document.querySelector('input[type="file"]');
     
+    previewContainer.classList.add('animate-fade-out');
+    
+    setTimeout(() => {
     preview.src = '';
     previewContainer.classList.add('hidden');
+        previewContainer.classList.remove('animate-fade-out');
     uploadContainer.classList.remove('hidden');
+        uploadContainer.classList.add('animate-fade-in');
     fileInput.value = '';
+    }, 300);
 }
 
-function toggleRemoveImage() {
-    const toggle = document.getElementById('remove-image-toggle');
-    const checkbox = document.getElementById('remove-image-checkbox');
+function removeImage() {
+    const imageContainer = document.querySelector('.relative.group');
+    const removeCheckbox = document.getElementById('remove-image-checkbox');
     const uploadContainer = document.getElementById('image-upload-container');
     
-    toggle.classList.remove('hidden');
-    checkbox.checked = true;
+    if (imageContainer) {
+        imageContainer.remove();
+    }
+    if (removeCheckbox) {
+        removeCheckbox.value = 'true';
+    }
     uploadContainer.classList.remove('hidden');
 }
+
+// Add toast notification system
+function showToast(message, type = 'error') {
+    const toast = document.createElement('div');
+    toast.className = `transform transition-all duration-300 ease-out scale-95 opacity-0 
+                      ${type === 'error' ? 'bg-red-500' : 'bg-green-500'} 
+                      text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 mb-2`;
+    
+    const icon = document.createElement('i');
+    icon.className = `fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}`;
+    
+    const text = document.createElement('span');
+    text.textContent = message;
+    
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    
+    const container = document.getElementById('toast-container');
+    container.appendChild(toast);
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+        toast.classList.remove('scale-95', 'opacity-0');
+        toast.classList.add('scale-100', 'opacity-100');
+    });
+    
+    // Remove toast after delay
+    setTimeout(() => {
+        toast.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            container.removeChild(toast);
+        }, 300);
+    }, 2000);
+}
+
+// Add these styles to the head of the document
+document.head.insertAdjacentHTML('beforeend', `
+    <style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+        
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .animate-fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        #toast-container {
+            pointer-events: none;
+        }
+        
+        #toast-container > div {
+            pointer-events: auto;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        .has-error .answer-checkbox-label {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .option-group {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .border-red-500 {
+            box-shadow: 0 0 0 1px rgb(239, 68, 68);
+        }
+        
+        #form-error-message {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+`);
 </script>
 {% endblock %}

@@ -9,7 +9,7 @@
                 Add New Question
             </h1>
 
-            <form action="{{ url_for('add_question') }}" method="POST" class="space-y-6">
+            <form id="questionForm" action="{{ url_for('add_question') }}" method="POST" class="space-y-6" onsubmit="return validateForm(event)">
                 <!-- Question Text -->
                 <div>
                     <label for="question_text" class="block text-sm font-medium mb-2">Question Text</label>
@@ -18,16 +18,22 @@
                 </div>
 
                 <!-- Options -->
-                <div id="options-container">
-                    <label class="block text-sm font-medium mb-2">Options</label>
-                    <div class="space-y-2">
-                        <div class="flex items-center space-x-2">
+                <div id="options-section">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-medium">Options</label>
+                        <div id="validation-message" class="hidden text-red-500 text-sm">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <span>Please select at least one correct answer</span>
+                        </div>
+                    </div>
+                    <div id="options-container" class="space-y-2">
+                        <div class="flex items-center space-x-2 option-group">
                             <input type="text" name="options[]" required
-                                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
-                            <div class="flex items-center">
-                                <input type="checkbox" name="correct_answers[]" value="0" class="mr-2">
-                                <label class="text-sm">Correct</label>
-                            </div>
+                                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary option-input">
+                            <label class="flex items-center answer-checkbox-label whitespace-nowrap">
+                                <input type="checkbox" name="correct_answers[]" value="0" class="mr-2 answer-checkbox" onchange="validateAnswerSelection()">
+                                <span>Correct</span>
+                            </label>
                         </div>
                     </div>
                     <button type="button" onclick="addOption()"
@@ -70,26 +76,132 @@
     let optionCount = 1;
 
     function addOption() {
-        const optionsContainer = document.querySelector('#options-container .space-y-2');
+        const optionsContainer = document.querySelector('#options-container');
         const newOption = document.createElement('div');
-        newOption.className = 'flex items-center space-x-2';
+        newOption.className = 'flex items-center space-x-2 option-group';
         newOption.innerHTML = `
             <input type="text" name="options[]" required
-                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary">
-            <div class="flex items-center">
-                <input type="checkbox" name="correct_answers[]" value="${optionCount}" class="mr-2">
-                <label class="text-sm">Correct</label>
-            </div>
+                class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary option-input">
+            <label class="flex items-center answer-checkbox-label whitespace-nowrap">
+                <input type="checkbox" name="correct_answers[]" value="${optionCount}" class="mr-2 answer-checkbox" onchange="validateAnswerSelection()">
+                <span>Correct</span>
+            </label>
             <button type="button" onclick="removeOption(this)" class="text-red-500 hover:text-red-400 transition-colors">
                 <i class="fas fa-trash"></i>
             </button>
         `;
         optionsContainer.appendChild(newOption);
         optionCount++;
+        validateAnswerSelection();
     }
 
     function removeOption(button) {
-        button.closest('.flex').remove();
+        button.closest('.option-group').remove();
+        updateOptionValues();
+        validateAnswerSelection();
     }
+
+    function updateOptionValues() {
+        const options = document.querySelectorAll('.option-group');
+        options.forEach((option, index) => {
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            checkbox.value = index;
+        });
+    }
+
+    function validateAnswerSelection() {
+        const correctAnswers = document.querySelectorAll('.answer-checkbox:checked');
+        const validationMessage = document.getElementById('validation-message');
+        const optionsSection = document.getElementById('options-section');
+        
+        if (correctAnswers.length === 0) {
+            optionsSection.classList.add('has-error');
+            document.querySelectorAll('.answer-checkbox-label').forEach(label => {
+                label.classList.add('text-red-500');
+            });
+        } else {
+            validationMessage.classList.add('hidden');
+            optionsSection.classList.remove('has-error');
+            document.querySelectorAll('.answer-checkbox-label').forEach(label => {
+                label.classList.remove('text-red-500');
+            });
+        }
+        return correctAnswers.length > 0;
+    }
+
+    function validateForm(event) {
+        event.preventDefault();
+        
+        // Validate question text
+        const questionText = document.getElementById('question_text');
+        if (!questionText.value.trim()) {
+            questionText.classList.add('border-red-500');
+            return false;
+        }
+        
+        // Validate options
+        const options = document.querySelectorAll('.option-input');
+        let emptyOptions = false;
+        options.forEach(option => {
+            if (!option.value.trim()) {
+                emptyOptions = true;
+                option.classList.add('border-red-500');
+            }
+        });
+        if (emptyOptions) {
+            return false;
+        }
+        
+        // Validate correct answer selection
+        const validationMessage = document.getElementById('validation-message');
+        if (!validateAnswerSelection()) {
+            validationMessage.classList.remove('hidden');
+            return false;
+        }
+        
+        // If validation passes, submit the form
+        document.getElementById('questionForm').submit();
+        return true;
+    }
+
+    // Add validation on input changes
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('questionForm');
+        const inputs = form.querySelectorAll('input[type="text"], textarea');
+        
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('border-red-500');
+                }
+            });
+        });
+        
+        // Initial validation check
+        validateAnswerSelection();
+    });
+
+    // Add styles
+    document.head.insertAdjacentHTML('beforeend', `
+        <style>
+            .has-error .answer-checkbox-label {
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.5; }
+                100% { opacity: 1; }
+            }
+            
+            .option-group {
+                transition: all 0.3s ease-in-out;
+            }
+            
+            .border-red-500 {
+                box-shadow: 0 0 0 1px rgb(239, 68, 68);
+            }
+        </style>
+    `);
 </script>
 {% endblock %}

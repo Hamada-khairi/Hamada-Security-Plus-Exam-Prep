@@ -51,7 +51,7 @@
                 <!-- Question Section -->
                 <div class="bg-gradient-to-br from-gray-700 to-gray-800 p-6 rounded-lg shadow-inner">
                     <div class="flex justify-between items-start gap-4 mb-4">
-                        <p class="text-lg text-gray-100" id="question-text"></p>
+                        <pre class="text-lg text-gray-100 whitespace-pre-wrap font-sans" id="question-text"></pre>
                         <button onclick="editCurrentQuestion()" class="text-blue-400 hover:text-blue-300 transition-colors flex-shrink-0">
                             <i class="fas fa-edit text-xl"></i>
                         </button>
@@ -240,7 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const totalQuestions = this.questions.length;
       const correctAnswers = this.getCorrectAnswersCount();
       const score = (correctAnswers / totalQuestions) * 100;
-      const timeTaken = Math.floor((Date.now() - this.startTime) / 1000);  // in seconds
+      
+      // Calculate time taken in minutes instead of seconds
+      const timeTakenInSeconds = Math.floor((Date.now() - this.startTime) / 1000);
+      const timeTakenInMinutes = Math.ceil(timeTakenInSeconds / 60);
 
       // Get incorrect question IDs
       const incorrectQuestions = [];
@@ -249,8 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
           incorrectQuestions.push(this.questions[index].id);
         }
       });
-
-      console.log("Incorrect questions to submit:", incorrectQuestions);  // Debug log
 
       try {
         const response = await fetch('/finish-exam', {
@@ -261,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({
             score: score,
             total_questions: totalQuestions,
-            time_taken: timeTaken,
+            time_taken: timeTakenInMinutes,
             incorrect_questions: incorrectQuestions
           })
         });

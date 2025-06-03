@@ -9,12 +9,52 @@
                 Add New Question
             </h1>
 
-            <form id="questionForm" action="{{ url_for('add_question') }}" method="POST" class="space-y-6" onsubmit="return validateForm(event)">
+            <form id="questionForm" action="{{ url_for('add_question') }}" method="POST" enctype="multipart/form-data" class="space-y-6" onsubmit="return validateForm(event)">
                 <!-- Question Text -->
                 <div>
                     <label for="question_text" class="block text-sm font-medium mb-2">Question Text</label>
                     <textarea id="question_text" name="question_text" rows="4" required
                         class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary"></textarea>
+                </div>
+
+                <!-- Question Image -->
+                <div class="space-y-4">
+                    <label class="block text-sm font-medium">Question Image</label>
+                    
+                    <!-- Image Upload -->
+                    <div id="image-upload-container">
+                        <div class="flex items-center justify-center w-full">
+                            <div class="w-full flex flex-col items-center px-4 py-6 bg-gray-700 text-gray-400 rounded-lg tracking-wide border-2 border-gray-600 border-dashed cursor-pointer hover:bg-gray-600 transition-all duration-300 ease-in-out relative"
+                                 id="dropzone"
+                                 ondrop="handleDrop(event)"
+                                 ondragover="handleDragOver(event)"
+                                 ondragleave="handleDragLeave(event)"
+                                 onclick="document.querySelector('#image-upload-container input[type=file]').click()">
+                                <div class="upload-content flex flex-col items-center transition-all duration-300 ease-in-out">
+                                    <i class="fas fa-cloud-upload-alt text-3xl mb-2 transform transition-transform duration-300 hover:scale-110"></i>
+                                    <span class="text-sm">Drag and drop an image here or click to upload</span>
+                                    <span class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG, GIF up to 5MB</span>
+                                </div>
+                                <label class="hidden">
+                                    <input type="file" name="image" accept="image/*" class="hidden" onchange="previewImage(event)">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Preview -->
+                    <div id="image-preview" class="hidden">
+                        <div class="relative group">
+                            <img id="preview" src="" alt="Image preview" class="max-w-full h-auto rounded-lg border-2 border-gray-600 transition-all duration-300 ease-in-out">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-lg">
+                                <button type="button" 
+                                        onclick="removePreview()" 
+                                        class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                                    <i class="fas fa-times mr-2"></i>Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Options -->
@@ -201,7 +241,108 @@
             .border-red-500 {
                 box-shadow: 0 0 0 1px rgb(239, 68, 68);
             }
+
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(10px); }
+            }
+            
+            .animate-shake {
+                animation: shake 0.4s ease-in-out;
+            }
+            
+            .animate-fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+            
+            .animate-fade-out {
+                animation: fadeOut 0.3s ease-out forwards;
+            }
         </style>
     `);
+
+    function handleDragOver(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const dropzone = document.getElementById('dropzone');
+        dropzone.classList.add('bg-gray-600', 'border-blue-500');
+        dropzone.querySelector('.upload-content').classList.add('scale-105');
+    }
+
+    function handleDragLeave(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const dropzone = document.getElementById('dropzone');
+        dropzone.classList.remove('bg-gray-600', 'border-blue-500');
+        dropzone.querySelector('.upload-content').classList.remove('scale-105');
+    }
+
+    function handleDrop(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const dropzone = document.getElementById('dropzone');
+        dropzone.classList.remove('bg-gray-600', 'border-blue-500');
+        dropzone.querySelector('.upload-content').classList.remove('scale-105');
+        
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            if (file.type.startsWith('image/')) {
+                const input = document.querySelector('input[type="file"]');
+                input.files = files;
+                previewImage({ target: input });
+            } else {
+                // Show error animation
+                dropzone.classList.add('animate-shake', 'border-red-500');
+                setTimeout(() => {
+                    dropzone.classList.remove('animate-shake', 'border-red-500');
+                }, 800);
+            }
+        }
+    }
+
+    function previewImage(event) {
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('image-preview');
+        const uploadContainer = document.getElementById('image-upload-container');
+        const file = event.target.files[0];
+        
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            previewContainer.classList.remove('hidden');
+            previewContainer.classList.add('animate-fade-in');
+            uploadContainer.classList.add('hidden');
+        }
+    }
+
+    function removePreview() {
+        const preview = document.getElementById('preview');
+        const previewContainer = document.getElementById('image-preview');
+        const uploadContainer = document.getElementById('image-upload-container');
+        const fileInput = document.querySelector('input[type="file"]');
+        
+        previewContainer.classList.add('animate-fade-out');
+        
+        setTimeout(() => {
+            preview.src = '';
+            previewContainer.classList.add('hidden');
+            previewContainer.classList.remove('animate-fade-out');
+            uploadContainer.classList.remove('hidden');
+            uploadContainer.classList.add('animate-fade-in');
+            fileInput.value = '';
+        }, 300);
+    }
 </script>
 {% endblock %}
